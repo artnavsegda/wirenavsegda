@@ -1,0 +1,3 @@
+[submodule "wpf/remote-wiring"]
+	path = wpf/remote-wiring
+	url = https://github.com/ms-iot/remote-wiring/
