@@ -1,5 +1,5 @@
 #include <TM1638.h>
-TM1638 module(7, 8, 6);
+TM1638 module(6, 5, 7);
 byte oldkeys = 0;
 
 void setup() {
@@ -47,10 +47,10 @@ void loop() {
   }
   // put your main code here, to run repeatedly:
   while (Serial.available() > 0) {
-    //String i = Serial.readStringUntil('\n');
-    int x = Serial.parseInt();
-    if (x!=0)
-      module.setDisplayToDecNumber(x, 0xF0);
+    String i = Serial.readStringUntil('\n');
+    //int x = Serial.parseInt();
+    //if (x!=0)
+      module.setDisplayToString(i);
     //Serial.println(i);
   }
   oldkeys = keys;
