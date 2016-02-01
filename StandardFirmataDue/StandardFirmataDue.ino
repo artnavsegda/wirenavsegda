@@ -743,7 +743,7 @@ void setup()
   // Firmata.begin(Serial1);
   // then comment out or remove lines 701 - 704 below
 
-  Firmata.begin(57600);
+  Firmata.begin(115200);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for ATmega32u4-based boards and Arduino 101
   }
