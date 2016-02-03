@@ -18,6 +18,7 @@ void setup()
 {
   Wire.begin(4);                // join i2c bus with address #4
   Wire.onReceive(receiveEvent); // register event
+  Wire.onRequest(requestEvent); // register event
   Serial.begin(9600);           // start serial for output
   module.setDisplayToHexNumber(0x1234ABCD, 0xF0);
 }
@@ -41,4 +42,8 @@ void receiveEvent(int howMany)
   Wire.readBytes(buf,howMany);
   module.setDisplayToString(buf);
   Serial.println(buf);
+}
+
+void requestEvent() {
+  Wire.write(module.getButtons());
 }
