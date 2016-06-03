@@ -57,6 +57,7 @@ void loop() {
   byte value;
   int one, two;
   digitalWrite(slaveSelectPin, LOW);
+  SPI.transfer(0x00);
   SPI.transfer(0x08);
   //delay(1);
   value = SPI.transfer(0x00);
