@@ -37,10 +37,27 @@ void receiveEvent(int howMany)
 // this function is registered as an event, see setup()
 void requestEvent()
 {
-  if (x == 0x01)
-    Wire.write(0x11);
-  if (x == 0x02)
-    Wire.write(0x12);
-  if (x == 0x00)
-    Wire.write(0x10);
+  switch(x)
+  {
+    case 0x00:
+      Wire.write(analogRead(A0));
+      break;
+    case 0x01:
+      Wire.write(analogRead(A1));
+      break;
+    case 0x02:
+      Wire.write(analogRead(A2));
+      break;
+    case 0x03:
+      Wire.write(analogRead(A3));
+      break;
+    case 0x04:
+      Wire.write(analogRead(A4));
+      break;
+    case 0x05:
+      Wire.write(analogRead(A5));
+      break;
+    default:
+      break;
+  }
 }
