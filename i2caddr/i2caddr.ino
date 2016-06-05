@@ -16,6 +16,7 @@ int x = 0x00;
 
 void setup()
 {
+  analogReadResolution(12);
   Wire.begin(9);                // join i2c bus with address #2
   Wire.onReceive(receiveEvent); // register event
   Wire.onRequest(requestEvent); // register event
@@ -33,6 +34,16 @@ void receiveEvent(int howMany)
   x = Wire.read();    // receive byte as an integer
 }
 
+void sendInt(int num){
+
+  // Send low byte
+  Wire.write((uint8_t)num);
+
+  // Send high byte
+  num >>= 8;
+  Wire.write((uint8_t)num);
+}
+
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent()
@@ -40,28 +51,28 @@ void requestEvent()
   switch(x)
   {
     case 0x00:
-      Wire.write(analogRead(A0));
+      sendInt(analogRead(A0));
       break;
     case 0x01:
-      Wire.write(analogRead(A1));
+      sendInt(analogRead(A1));
       break;
     case 0x02:
-      Wire.write(analogRead(A2));
+      sendInt(analogRead(A2));
       break;
     case 0x03:
-      Wire.write(analogRead(A3));
+      sendInt(analogRead(A3));
       break;
     case 0x04:
-      Wire.write(analogRead(A4));
+      sendInt(analogRead(A4));
       break;
     case 0x05:
-      Wire.write(analogRead(A5));
+      sendInt(analogRead(A5));
       break;
     case 0x06:
-      Wire.write(analogRead(A6));
+      sendInt(analogRead(A6));
       break;
     case 0x07:
-      Wire.write(analogRead(A7));
+      sendInt(analogRead(A7));
       break;
     default:
       break;
