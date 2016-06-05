@@ -57,6 +57,12 @@ void requestEvent()
     case 0x05:
       Wire.write(analogRead(A5));
       break;
+    case 0x06:
+      Wire.write(analogRead(A6));
+      break;
+    case 0x07:
+      Wire.write(analogRead(A7));
+      break;
     default:
       break;
   }
