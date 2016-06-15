@@ -5,7 +5,20 @@ TM1638 module(6, 5, 7);
 
 void setup() {
   Wire.begin();        // join i2c bus (address optional for master)
-  Serial.begin(9600);  // start serial for output
+  //Serial.begin(9600);  // start serial for output
+  Wire.beginTransmission(0x18);
+  Wire.write("\x03\x3f");
+  Wire.endTransmission();
+
+  Wire.beginTransmission(0x1a);
+  Wire.write(0x03);
+  Wire.write(0x00);
+  Wire.endTransmission();
+
+  Wire.beginTransmission(0x1a);
+  Wire.write(0x02);
+  Wire.write(0x00);
+  Wire.endTransmission();
 }
 
 uint16_t readvalue(uint8_t addr)
@@ -19,7 +32,7 @@ uint16_t readvalue(uint8_t addr)
 
 void loop() {
   //Serial.println(readvalue(0x00));
-  module.setDisplayToDecNumber(readvalue(0x08)-0x17CC, 0xF0);
+  //module.setDisplayToDecNumber(readvalue(0x08)-0x17CC, 0xF0);
   /*Serial.println(readvalue(0x01));
   Serial.println(readvalue(0x02));
   Serial.println(readvalue(0x03));
@@ -27,5 +40,15 @@ void loop() {
   Serial.println(readvalue(0x05));
   Serial.println(readvalue(0x06));
   Serial.println(readvalue(0x07));*/
+  //Wire.beginTransmission(0x18);
+  //Wire.write("\x01\x40");
+  //Wire.endTransmission();
+  //Wire.beginTransmission(0x18);
+  //Wire.write("\x01\x80");
+  //Wire.endTransmission();
+  Wire.beginTransmission(0x1a);
+  Wire.write(0x00);
+  Wire.write(0xFF);
+  Wire.endTransmission();
   delay(500);
 }

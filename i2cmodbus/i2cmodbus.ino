@@ -13,6 +13,12 @@ long ts;
 
 void setup() {
     Wire.begin();        // join i2c bus (address optional for master)
+    
+  Wire.beginTransmission(0x1a); // transmit to device #8
+  Wire.write(0x03);        // sends five bytes
+  Wire.write(0x00);              // sends one byte
+  Wire.endTransmission();    // stop transmitting
+    
     // The media access control (ethernet hardware) address for the shield
     byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
     // The IP address for the shield
@@ -33,6 +39,11 @@ void setup() {
     mb.addHreg(109);
 
     ts = millis();
+
+  Wire.beginTransmission(0x1a); // transmit to device #8
+  Wire.write(0x01);        // sends five bytes
+  Wire.write(0xFF);              // sends one byte
+  Wire.endTransmission();    // stop transmitting
 }
 
 uint16_t readvalue(uint8_t addr)
