@@ -1,4 +1,7 @@
 #include <Wire.h>
+#include <TM1638.h>
+
+TM1638 module(6, 5, 7);
 
 void setup() {
   Wire.begin();        // join i2c bus (address optional for master)
@@ -15,7 +18,8 @@ uint16_t readvalue(uint8_t addr)
 }
 
 void loop() {
-  Serial.println(readvalue(0x00));
+  //Serial.println(readvalue(0x00));
+  module.setDisplayToDecNumber(readvalue(0x08)-0x17CC, 0xF0);
   /*Serial.println(readvalue(0x01));
   Serial.println(readvalue(0x02));
   Serial.println(readvalue(0x03));
