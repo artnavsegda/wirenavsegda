@@ -74,6 +74,18 @@ void requestEvent()
     case 0x07:
       sendInt(analogRead(A7));
       break;
+    case 0x08:
+      sendInt(analogRead(A8));
+      break;
+    case 0x09:
+      sendInt(analogRead(A9));
+      break;
+    case 0x0a:
+      sendInt(analogRead(A10));
+      break;
+    case 0x0b:
+      sendInt(analogRead(A11));
+      break;
     default:
       break;
   }

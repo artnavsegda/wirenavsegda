@@ -11,7 +11,34 @@ ModbusIP mb;
 
 long ts;
 
+byte state = LOW;
+
+void blink() {
+  state = !state;
+  if (state)
+    tone(9, 880, 100);
+  else
+    tone(9, 659, 100);
+
+  /*   if (state)
+   {
+      Wire.beginTransmission(0x18);
+      Wire.write("\x03\x3f");
+      Wire.write("\x01\x40");
+      Wire.endTransmission();
+   }
+   else
+   {
+      Wire.beginTransmission(0x18);
+      Wire.write("\x03\x3f");
+      Wire.write("\x01\x80");
+      Wire.endTransmission();
+   }*/
+}
+
 void setup() {
+  pinMode(2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(2), blink, LOW);
     Wire.begin();        // join i2c bus (address optional for master)
     
   Wire.beginTransmission(0x1a); // transmit to device #8
@@ -44,6 +71,7 @@ void setup() {
   Wire.write(0x01);        // sends five bytes
   Wire.write(0xFF);              // sends one byte
   Wire.endTransmission();    // stop transmitting
+  tone(9, 784, 100);
 }
 
 uint16_t readvalue(uint8_t addr)
