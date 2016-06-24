@@ -85,6 +85,16 @@ uint16_t readvalue(uint8_t addr)
   return Wire.read()|Wire.read()<<8; // receive a byte as character
 }
 
+int readbit(uint8_t addr, uint8_t bit)
+{
+  Wire.beginTransmission(addr); // transmit to device #4
+  Wire.write(0x00);              // sends one byte  
+  Wire.endTransmission();    // stop transmitting
+  Wire.requestFrom(addr, 1);    // request 6 bytes from slave device #2
+  if (Wire.read() & _BV(bit)) return HIGH;
+  return LOW;
+}
+
 void loop() {
    //Call once inside loop() - all magic here
    mb.task();
