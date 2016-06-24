@@ -66,7 +66,14 @@ void setup() {
     mb.addHreg(109);
 
     mb.addCoil(100);
-
+    mb.addCoil(101);
+    mb.addCoil(102);
+    mb.addCoil(103);
+    mb.addCoil(104);
+    mb.addCoil(105);
+    mb.addCoil(106);
+    mb.addCoil(107);
+    
     ts = millis();
 
   Wire.beginTransmission(0x1a); // transmit to device #8
@@ -114,6 +121,14 @@ void loop() {
        mb.Hreg(108, readvalue(0x08));
        mb.Hreg(109, readvalue(0x09));
 
-       mb.Coil(100, digitalRead(13));
+       //mb.Coil(99, digitalRead(13));
+       mb.Coil(100, readbit(0x18,0));
+       mb.Coil(101, readbit(0x18,1));
+       mb.Coil(102, readbit(0x18,2));
+       mb.Coil(103, readbit(0x18,3));
+       mb.Coil(104, readbit(0x18,4));
+       mb.Coil(105, readbit(0x18,5));
+       mb.Coil(106, readbit(0x18,6));
+       mb.Coil(107, readbit(0x18,7));
        
 }
