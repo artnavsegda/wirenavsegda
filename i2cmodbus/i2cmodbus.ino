@@ -65,6 +65,8 @@ void setup() {
     mb.addHreg(108);
     mb.addHreg(109);
 
+    mb.addCoil(100);
+
     ts = millis();
 
   Wire.beginTransmission(0x1a); // transmit to device #8
@@ -101,4 +103,7 @@ void loop() {
        mb.Hreg(107, readvalue(0x07));
        mb.Hreg(108, readvalue(0x08));
        mb.Hreg(109, readvalue(0x09));
+
+       mb.Coil(100, digitalRead(13));
+       
 }
