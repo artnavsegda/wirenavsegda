@@ -57,6 +57,16 @@ void pca9557digitalWrite(uint8_t i2c, uint8_t pin, uint8_t val)
   Wire.endTransmission();
 }
 
+int pca9557digitalRead(uint8_t i2c, uint8_t pin)
+{
+  Wire.beginTransmission(i2c);
+  Wire.write(byte(0x00));
+  Wire.endTransmission();
+  Wire.requestFrom(i2c,1);
+  if (Wire.read() & bit(pin)) return HIGH;
+  return LOW; 
+}
+
 void loop() {
   digitalWrite(2, LOW);
   digitalWrite(3, LOW);
