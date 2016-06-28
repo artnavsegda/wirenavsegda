@@ -68,8 +68,8 @@ void setup() {
     mb.addHreg(108);
     mb.addHreg(109);
 
-    /*mb.addCoil(100);
-    mb.addCoil(101);
+    mb.addCoil(100);
+    /*mb.addCoil(101);
     mb.addCoil(102);
     mb.addCoil(103);
     mb.addCoil(104);
@@ -174,16 +174,17 @@ void loop() {
        mb.Coil(105, readbit(0x18,5));
        mb.Coil(106, readbit(0x18,6));
        mb.Coil(107, readbit(0x18,7));*/
-            if (digitalRead(2))
+       if (!digitalRead(2) || mb.Coil(100))
+       //if (mb.Coil(100))
    {
       Wire.beginTransmission(0x18);
-      Wire.write("\x01\x80");
+      Wire.write("\x01\x40");
       Wire.endTransmission();
    }
    else
    {
       Wire.beginTransmission(0x18);
-      Wire.write("\x01\x40");
+      Wire.write("\x01\x80");
       Wire.endTransmission();
    }
 }
