@@ -14,36 +14,39 @@ long ts;
 byte state = LOW;
 
 void blink() {
-  state = !state;
+  state = digitalRead(2);
   if (state)
     tone(9, 880, 100);
   else
     tone(9, 659, 100);
 
-  /*   if (state)
+     if (state)
    {
       Wire.beginTransmission(0x18);
-      Wire.write("\x03\x3f");
       Wire.write("\x01\x40");
       Wire.endTransmission();
    }
    else
    {
       Wire.beginTransmission(0x18);
-      Wire.write("\x03\x3f");
       Wire.write("\x01\x80");
       Wire.endTransmission();
-   }*/
+   }
 }
 
 void setup() {
   pinMode(2, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(2), blink, LOW);
+  //attachInterrupt(digitalPinToInterrupt(2), blink, CHANGE);
     Wire.begin();        // join i2c bus (address optional for master)
     
   Wire.beginTransmission(0x1a); // transmit to device #8
   Wire.write(0x03);        // sends five bytes
   Wire.write(0x00);              // sends one byte
+  Wire.endTransmission();    // stop transmitting
+  
+  Wire.beginTransmission(0x18); // transmit to device #8
+  Wire.write(0x03);        // sends five bytes
+  Wire.write(0x3f);              // sends one byte
   Wire.endTransmission();    // stop transmitting
     
     // The media access control (ethernet hardware) address for the shield
@@ -171,5 +174,16 @@ void loop() {
        mb.Coil(105, readbit(0x18,5));
        mb.Coil(106, readbit(0x18,6));
        mb.Coil(107, readbit(0x18,7));*/
-       
+            if (digitalRead(2))
+   {
+      Wire.beginTransmission(0x18);
+      Wire.write("\x01\x80");
+      Wire.endTransmission();
+   }
+   else
+   {
+      Wire.beginTransmission(0x18);
+      Wire.write("\x01\x40");
+      Wire.endTransmission();
+   }
 }
