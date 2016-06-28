@@ -73,6 +73,47 @@ void setup() {
     mb.addCoil(105);
     mb.addCoil(106);
     mb.addCoil(107);
+    mb.addCoil(108);
+    mb.addCoil(109);
+    mb.addCoil(110);
+    mb.addCoil(111);
+    mb.addCoil(112);
+    mb.addCoil(113);
+    mb.addCoil(114);
+    mb.addCoil(115);
+    mb.addCoil(116);
+    mb.addCoil(117);
+    mb.addCoil(118);
+    mb.addCoil(119);
+    mb.addCoil(120);
+    mb.addCoil(121);
+    mb.addCoil(122);
+    mb.addCoil(123);
+
+    mb.addIsts(100);
+    mb.addIsts(101);
+    mb.addIsts(102);
+    mb.addIsts(103);
+    mb.addIsts(104);
+    mb.addIsts(105);
+    mb.addIsts(106);
+    mb.addIsts(107);
+    mb.addIsts(108);
+    mb.addIsts(109);
+    mb.addIsts(110);
+    mb.addIsts(111);
+    mb.addIsts(112);
+    mb.addIsts(113);
+    mb.addIsts(114);
+    mb.addIsts(115);
+    mb.addIsts(116);
+    mb.addIsts(117);
+    mb.addIsts(118);
+    mb.addIsts(119);
+    mb.addIsts(120);
+    mb.addIsts(121);
+    mb.addIsts(122);
+    mb.addIsts(123);
     
     ts = millis();
 

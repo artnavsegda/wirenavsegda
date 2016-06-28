@@ -20,11 +20,11 @@ void pca9557pinMode(uint8_t i2c, uint8_t pin, uint8_t mode)
 
 void setup() {
   Wire.begin(); // join i2c bus (address optional for master)
-  //Wire.beginTransmission(0x1a); // transmit to device #44 (0x2c)
+  Wire.beginTransmission(0x1a); // transmit to device #44 (0x2c)
   // device address is specified in datasheet
-  //Wire.write(byte(0x03));            // sends instruction byte
-  //Wire.write(byte(0x00));             // sends potentiometer value byte
-  //Wire.endTransmission();     // stop transmitting
+  Wire.write(byte(0x02));            // sends instruction byte
+  Wire.write(byte(0x00));             // sends potentiometer value byte
+  Wire.endTransmission();     // stop transmitting
   pinMode(2, OUTPUT);
   pinMode(3, OUTPUT);
   pinMode(4, OUTPUT);
