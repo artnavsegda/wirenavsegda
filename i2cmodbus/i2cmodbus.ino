@@ -5,6 +5,14 @@
 
 ModbusIP mb;
 
+void pca9557init(uint8_t i2c)
+{
+  Wire.beginTransmission(i2c);
+  Wire.write(byte(0x02));
+  Wire.write(0x00);
+  Wire.endTransmission();
+}
+
 int pca9557digitalRead(uint8_t i2c, uint8_t pin)
 {
   Wire.beginTransmission(i2c);
@@ -73,7 +81,7 @@ void setup() {
     mb.addCoil(122);
     mb.addCoil(123);*/
 
-    /*mb.addIsts(100);
+    mb.addIsts(100);
     mb.addIsts(101);
     mb.addIsts(102);
     mb.addIsts(103);
@@ -96,7 +104,7 @@ void setup() {
     mb.addIsts(120);
     mb.addIsts(121);
     mb.addIsts(122);
-    mb.addIsts(123);*/
+    mb.addIsts(123);
   //for (int i = 100; i <= 123; i++)
   //{
   //  mb.addIsts(i);
@@ -131,22 +139,49 @@ int readbit(uint8_t addr, uint8_t bit)
 
 void loop() {
    //Call once inside loop() - all magic here
-   mb.task();
+  mb.task();
 
    //Read each two seconds
    //if (millis() > ts + 2000) {
      //  ts = millis();
        //Setting raw value (0-1024)
-       mb.Hreg(100, readvalue(0x00));
-       mb.Hreg(101, readvalue(0x01));
-       mb.Hreg(102, readvalue(0x02));
-       mb.Hreg(103, readvalue(0x03));
-       mb.Hreg(104, readvalue(0x04));
-       mb.Hreg(105, readvalue(0x05));
-       mb.Hreg(106, readvalue(0x06));
-       mb.Hreg(107, readvalue(0x07));
-       mb.Hreg(108, readvalue(0x08));
-       mb.Hreg(109, readvalue(0x09));
+  mb.Hreg(100, readvalue(0x00));
+  mb.Hreg(101, readvalue(0x01));
+  mb.Hreg(102, readvalue(0x02));
+  mb.Hreg(103, readvalue(0x03));
+  mb.Hreg(104, readvalue(0x04));
+  mb.Hreg(105, readvalue(0x05));
+  mb.Hreg(106, readvalue(0x06));
+  mb.Hreg(107, readvalue(0x07));
+  mb.Hreg(108, readvalue(0x08));
+  mb.Hreg(109, readvalue(0x09));
+
+  mb.Ists(100, pca9557digitalRead(0x18, 0));
+  mb.Ists(101, pca9557digitalRead(0x18, 1));
+  mb.Ists(102, pca9557digitalRead(0x18, 2));
+  mb.Ists(103, pca9557digitalRead(0x18, 3));
+  mb.Ists(104, pca9557digitalRead(0x18, 4));
+  mb.Ists(105, pca9557digitalRead(0x18, 5));
+  mb.Ists(106, pca9557digitalRead(0x18, 6));
+  mb.Ists(107, pca9557digitalRead(0x18, 7));
+
+  mb.Ists(108, pca9557digitalRead(0x19, 0));
+  mb.Ists(109, pca9557digitalRead(0x19, 1));
+  mb.Ists(110, pca9557digitalRead(0x19, 2));
+  mb.Ists(111, pca9557digitalRead(0x19, 3));
+  mb.Ists(112, pca9557digitalRead(0x19, 4));
+  mb.Ists(113, pca9557digitalRead(0x19, 5));
+  mb.Ists(114, pca9557digitalRead(0x19, 6));
+  mb.Ists(115, pca9557digitalRead(0x19, 7));
+
+  mb.Ists(116, pca9557digitalRead(0x1a, 0));
+  mb.Ists(117, pca9557digitalRead(0x1a, 1));
+  mb.Ists(118, pca9557digitalRead(0x1a, 2));
+  mb.Ists(119, pca9557digitalRead(0x1a, 3));
+  mb.Ists(120, pca9557digitalRead(0x1a, 4));
+  mb.Ists(121, pca9557digitalRead(0x1a, 5));
+  mb.Ists(122, pca9557digitalRead(0x1a, 6));
+  mb.Ists(123, pca9557digitalRead(0x1a, 7));
 
   //int x;
   //for (int i = 0, i <= 7, i++)
