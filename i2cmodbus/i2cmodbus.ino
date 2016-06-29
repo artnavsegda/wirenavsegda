@@ -9,6 +9,21 @@
 #define SERVO_1_LEFT_IN 5
 #define SERVO_1_RIGHT_IN 4
 
+#define SERVO_2_LEFT_OUT 3
+#define SERVO_2_RIGHT_OUT 2
+#define SERVO_2_LEFT_IN 1
+#define SERVO_2_RIGHT_IN 7
+
+#define SERVO_3_LEFT_OUT 6
+#define SERVO_3_RIGHT_OUT 5
+#define SERVO_3_LEFT_IN 4
+#define SERVO_3_RIGHT_IN 3
+
+#define SERVO_4_LEFT_OUT 2
+#define SERVO_4_RIGHT_OUT 1
+#define SERVO_4_LEFT_IN 7
+#define SERVO_4_RIGHT_IN 6
+
 ModbusIP mb;
 uint8_t configuration[256];
 uint8_t value[256];
@@ -71,15 +86,22 @@ void setup() {
   pca9557pinMode(0x18, SERVO_1_RIGHT_OUT, OUTPUT);
   pca9557pinMode(0x18, SERVO_1_LEFT_IN, INPUT);
   pca9557pinMode(0x18, SERVO_1_RIGHT_IN, INPUT);
+  pca9557pinMode(0x18, SERVO_2_LEFT_OUT, OUTPUT);
+  pca9557pinMode(0x18, SERVO_2_RIGHT_OUT, OUTPUT);
+  pca9557pinMode(0x18, SERVO_2_LEFT_IN, INPUT);
   pca9557init(0x19);
+  pca9557pinMode(0x19, SERVO_2_RIGHT_IN, INPUT);
+  pca9557pinMode(0x19, SERVO_3_LEFT_OUT, OUTPUT);
+  pca9557pinMode(0x19, SERVO_3_RIGHT_OUT, OUTPUT);
+  pca9557pinMode(0x19, SERVO_3_LEFT_IN, INPUT);
+  pca9557pinMode(0x19, SERVO_3_RIGHT_IN, INPUT);
+  pca9557pinMode(0x19, SERVO_4_LEFT_OUT, OUTPUT);
+  pca9557pinMode(0x19, SERVO_4_RIGHT_OUT, OUTPUT);
   pca9557init(0x1a);
+  pca9557pinMode(0x1a, SERVO_4_LEFT_IN, INPUT);
+  pca9557pinMode(0x1a, SERVO_4_RIGHT_IN, INPUT);
   pca9557pinMode(0x1a, U3_IGNIT, OUTPUT);
-  
-  Wire.beginTransmission(0x18); // transmit to device #8
-  Wire.write(0x03);        // sends five bytes
-  Wire.write(0x3f);              // sends one byte
-  Wire.endTransmission();    // stop transmitting
-    
+      
     // The media access control (ethernet hardware) address for the shield
     byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
     // The IP address for the shield
@@ -100,29 +122,6 @@ void setup() {
     mb.addHreg(109);
 
     mb.addCoil(100);
-    /*mb.addCoil(101);
-    mb.addCoil(102);
-    mb.addCoil(103);
-    mb.addCoil(104);
-    mb.addCoil(105);
-    mb.addCoil(106);
-    mb.addCoil(107);
-    mb.addCoil(108);
-    mb.addCoil(109);
-    mb.addCoil(110);
-    mb.addCoil(111);
-    mb.addCoil(112);
-    mb.addCoil(113);
-    mb.addCoil(114);
-    mb.addCoil(115);
-    mb.addCoil(116);
-    mb.addCoil(117);
-    mb.addCoil(118);
-    mb.addCoil(119);
-    mb.addCoil(120);
-    mb.addCoil(121);
-    mb.addCoil(122);
-    mb.addCoil(123);*/
 
     mb.addIsts(100);
     mb.addIsts(101);
@@ -152,12 +151,9 @@ void setup() {
   //{
   //  mb.addIsts(i);
   //}
-    
 
-  Wire.beginTransmission(0x1a); // transmit to device #8
-  Wire.write(0x01);        // sends five bytes
-  Wire.write(0xFF);              // sends one byte
-  Wire.endTransmission();    // stop transmitting
+  pca9557digitalWrite(0x1a, U3_IGNIT, HIGH);
+
   tone(9, 784, 100);
 }
 
@@ -244,16 +240,16 @@ void loop() {
   if (!digitalRead(2) || mb.Coil(100))
        //if (mb.Coil(100))
   {
-    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, HIGH);
-    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, LOW);
+    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, LOW);
+    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, HIGH);
     //Wire.beginTransmission(0x18);
     //Wire.write("\x01\x40");
     //Wire.endTransmission();
   }
   else
   {
-    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, HIGH);
-    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, LOW);
+    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, LOW);
+    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, HIGH);
     //Wire.beginTransmission(0x18);
     //Wire.write("\x01\x80");
     //Wire.endTransmission();
