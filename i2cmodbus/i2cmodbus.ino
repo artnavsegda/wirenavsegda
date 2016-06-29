@@ -26,6 +26,9 @@ int pca9557digitalRead(uint8_t i2c, uint8_t pin)
 void setup() {
   pinMode(2, INPUT_PULLUP);
   Wire.begin();        // join i2c bus (address optional for master)
+  pca9557init(0x18);
+  pca9557init(0x19);
+  pca9557init(0x1a);
     
   Wire.beginTransmission(0x1a); // transmit to device #8
   Wire.write(0x03);        // sends five bytes
