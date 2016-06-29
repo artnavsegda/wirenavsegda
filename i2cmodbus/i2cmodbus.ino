@@ -3,41 +3,21 @@
 #include <ModbusIP_ENC28J60.h>
 #include <Wire.h>
 
-//Modbus Registers Offsets (0-9999)
-const int SENSOR_HREG = 100;
-
-//ModbusIP object
 ModbusIP mb;
 
-long ts;
-
-byte state = LOW;
-
-void blink() {
-  state = digitalRead(2);
-  if (state)
-    tone(9, 880, 100);
-  else
-    tone(9, 659, 100);
-
-     if (state)
-   {
-      Wire.beginTransmission(0x18);
-      Wire.write("\x01\x40");
-      Wire.endTransmission();
-   }
-   else
-   {
-      Wire.beginTransmission(0x18);
-      Wire.write("\x01\x80");
-      Wire.endTransmission();
-   }
+int pca9557digitalRead(uint8_t i2c, uint8_t pin)
+{
+  Wire.beginTransmission(i2c);
+  Wire.write(byte(0x00));
+  Wire.endTransmission();
+  Wire.requestFrom(i2c,1);
+  if (Wire.read() & bit(pin)) return HIGH;
+  return LOW; 
 }
 
 void setup() {
   pinMode(2, INPUT_PULLUP);
-  //attachInterrupt(digitalPinToInterrupt(2), blink, CHANGE);
-    Wire.begin();        // join i2c bus (address optional for master)
+  Wire.begin();        // join i2c bus (address optional for master)
     
   Wire.beginTransmission(0x1a); // transmit to device #8
   Wire.write(0x03);        // sends five bytes
@@ -91,9 +71,9 @@ void setup() {
     mb.addCoil(120);
     mb.addCoil(121);
     mb.addCoil(122);
-    mb.addCoil(123);
+    mb.addCoil(123);*/
 
-    mb.addIsts(100);
+    /*mb.addIsts(100);
     mb.addIsts(101);
     mb.addIsts(102);
     mb.addIsts(103);
@@ -117,8 +97,11 @@ void setup() {
     mb.addIsts(121);
     mb.addIsts(122);
     mb.addIsts(123);*/
+  //for (int i = 100; i <= 123; i++)
+  //{
+  //  mb.addIsts(i);
+  //}
     
-    //ts = millis();
 
   Wire.beginTransmission(0x1a); // transmit to device #8
   Wire.write(0x01);        // sends five bytes
@@ -164,6 +147,12 @@ void loop() {
        mb.Hreg(107, readvalue(0x07));
        mb.Hreg(108, readvalue(0x08));
        mb.Hreg(109, readvalue(0x09));
+
+  //int x;
+  //for (int i = 0, i <= 7, i++)
+  //{
+  //  mb.Ists(x++, pca9557digitalRead(0x18,i);
+  //}
 
        //mb.Coil(99, digitalRead(13));
        /*mb.Coil(100, readbit(0x18,0));
