@@ -3,7 +3,15 @@
 #include <ModbusIP_ENC28J60.h>
 #include <Wire.h>
 
+#define U3_IGNIT 1
+#define SERVO_1_LEFT_OUT 7
+#define SERVO_1_RIGHT_OUT 6
+#define SERVO_1_LEFT_IN 5
+#define SERVO_1_RIGHT_IN 4
+
 ModbusIP mb;
+uint8_t configuration[256];
+uint8_t value[256];
 
 void pca9557init(uint8_t i2c)
 {
@@ -23,17 +31,49 @@ int pca9557digitalRead(uint8_t i2c, uint8_t pin)
   return LOW; 
 }
 
+void pca9557digitalWrite(uint8_t i2c, uint8_t pin, uint8_t val)
+{
+  Wire.beginTransmission(i2c);
+  Wire.write(byte(0x01));
+  if (val == LOW)
+  {
+    value[i2c] &= ~bit(pin);
+  }
+  else
+  {
+    value[i2c] |= bit(pin);
+  }
+  Wire.write(value[i2c]);
+  Wire.endTransmission();
+}
+
+void pca9557pinMode(uint8_t i2c, uint8_t pin, uint8_t mode)
+{
+  Wire.beginTransmission(i2c);
+  Wire.write(byte(0x03));
+  if (mode == OUTPUT)
+  {
+    configuration[i2c] &= ~bit(pin);
+  }
+  else
+  {
+    configuration[i2c] |= bit(pin);
+  }
+  Wire.write(configuration[i2c]);
+  Wire.endTransmission();
+}
+
 void setup() {
   pinMode(2, INPUT_PULLUP);
   Wire.begin();        // join i2c bus (address optional for master)
   pca9557init(0x18);
+  pca9557pinMode(0x18, SERVO_1_LEFT_OUT, OUTPUT);
+  pca9557pinMode(0x18, SERVO_1_RIGHT_OUT, OUTPUT);
+  pca9557pinMode(0x18, SERVO_1_LEFT_IN, INPUT);
+  pca9557pinMode(0x18, SERVO_1_RIGHT_IN, INPUT);
   pca9557init(0x19);
   pca9557init(0x1a);
-    
-  Wire.beginTransmission(0x1a); // transmit to device #8
-  Wire.write(0x03);        // sends five bytes
-  Wire.write(0x00);              // sends one byte
-  Wire.endTransmission();    // stop transmitting
+  pca9557pinMode(0x1a, U3_IGNIT, OUTPUT);
   
   Wire.beginTransmission(0x18); // transmit to device #8
   Wire.write(0x03);        // sends five bytes
@@ -201,17 +241,21 @@ void loop() {
        mb.Coil(105, readbit(0x18,5));
        mb.Coil(106, readbit(0x18,6));
        mb.Coil(107, readbit(0x18,7));*/
-       if (!digitalRead(2) || mb.Coil(100))
+  if (!digitalRead(2) || mb.Coil(100))
        //if (mb.Coil(100))
-   {
-      Wire.beginTransmission(0x18);
-      Wire.write("\x01\x40");
-      Wire.endTransmission();
-   }
-   else
-   {
-      Wire.beginTransmission(0x18);
-      Wire.write("\x01\x80");
-      Wire.endTransmission();
-   }
+  {
+    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, HIGH);
+    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, LOW);
+    //Wire.beginTransmission(0x18);
+    //Wire.write("\x01\x40");
+    //Wire.endTransmission();
+  }
+  else
+  {
+    pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, HIGH);
+    pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, LOW);
+    //Wire.beginTransmission(0x18);
+    //Wire.write("\x01\x80");
+    //Wire.endTransmission();
+  }
 }
