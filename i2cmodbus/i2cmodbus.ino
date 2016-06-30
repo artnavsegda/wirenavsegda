@@ -2,27 +2,7 @@
 #include <Modbus.h>
 #include <ModbusIP_ENC28J60.h>
 #include <Wire.h>
-
-#define U3_IGNIT 1
-#define SERVO_1_LEFT_OUT 7
-#define SERVO_1_RIGHT_OUT 6
-#define SERVO_1_LEFT_IN 5
-#define SERVO_1_RIGHT_IN 4
-
-#define SERVO_2_LEFT_OUT 3
-#define SERVO_2_RIGHT_OUT 2
-#define SERVO_2_LEFT_IN 1
-#define SERVO_2_RIGHT_IN 7
-
-#define SERVO_3_LEFT_OUT 6
-#define SERVO_3_RIGHT_OUT 5
-#define SERVO_3_LEFT_IN 4
-#define SERVO_3_RIGHT_IN 3
-
-#define SERVO_4_LEFT_OUT 2
-#define SERVO_4_RIGHT_OUT 1
-#define SERVO_4_LEFT_IN 7
-#define SERVO_4_RIGHT_IN 6
+#include "logic.h"
 
 ModbusIP mb;
 uint8_t configuration[256];
@@ -110,43 +90,69 @@ void setup() {
     mb.config(mac, ip);
 
     // Add SENSOR_IREG register - Use addIreg() for analog Inputs
-    mb.addHreg(100);
-    mb.addHreg(101);
-    mb.addHreg(102);
-    mb.addHreg(103);
-    mb.addHreg(104);
-    mb.addHreg(105);
-    mb.addHreg(106);
-    mb.addHreg(107);
-    mb.addHreg(108);
-    mb.addHreg(109);
+  mb.addHreg(100);
+  mb.addHreg(101);
+  mb.addHreg(102);
+  mb.addHreg(103);
+  mb.addHreg(104);
+  mb.addHreg(105);
+  mb.addHreg(106);
+  mb.addHreg(107);
+  mb.addHreg(108);
+  mb.addHreg(109);
 
-    mb.addCoil(100);
+//  mb.addCoil(99);
 
-    mb.addIsts(100);
-    mb.addIsts(101);
-    mb.addIsts(102);
-    mb.addIsts(103);
-    mb.addIsts(104);
-    mb.addIsts(105);
-    mb.addIsts(106);
-    mb.addIsts(107);
-    mb.addIsts(108);
-    mb.addIsts(109);
-    mb.addIsts(110);
-    mb.addIsts(111);
-    mb.addIsts(112);
-    mb.addIsts(113);
-    mb.addIsts(114);
-    mb.addIsts(115);
-    mb.addIsts(116);
-    mb.addIsts(117);
-    mb.addIsts(118);
-    mb.addIsts(119);
-    mb.addIsts(120);
-    mb.addIsts(121);
-    mb.addIsts(122);
-    mb.addIsts(123);
+  mb.addIsts(100);
+  mb.addIsts(101);
+  mb.addIsts(102);
+  mb.addIsts(103);
+  mb.addIsts(104); // SERVO_1_RIGHT_IN
+  mb.addIsts(105); // SERVO_1_LEFT_IN
+  mb.addIsts(106);
+  mb.addIsts(107);
+  mb.addIsts(108);
+  mb.addIsts(109);
+  mb.addIsts(110);
+  mb.addIsts(111);
+  mb.addIsts(112);
+  mb.addIsts(113);
+  mb.addIsts(114);
+  mb.addIsts(115);
+  mb.addIsts(116);
+  mb.addIsts(117);
+  mb.addIsts(118);
+  mb.addIsts(119);
+  mb.addIsts(120);
+  mb.addIsts(121);
+  mb.addIsts(122);
+  mb.addIsts(123);
+
+  mb.addCoil(100);
+  mb.addCoil(101);
+  mb.addCoil(102);
+  mb.addCoil(103);
+  mb.addCoil(104); // SERVO_1_RIGHT_IN
+  mb.addCoil(105); // SERVO_1_LEFT_IN
+  mb.addCoil(106); // SERVO_1_RIGHT_OUT
+  mb.addCoil(107); // SERVO_1_LEFT_OUT
+  mb.addCoil(108);
+  mb.addCoil(109);
+  mb.addCoil(110);
+  mb.addCoil(111);
+  mb.addCoil(112);
+  mb.addCoil(113);
+  mb.addCoil(114);
+  mb.addCoil(115);
+  mb.addCoil(116);
+  mb.addCoil(117, HIGH); //U3_IGNIT
+  mb.addCoil(118);
+  mb.addCoil(119);
+  mb.addCoil(120);
+  mb.addCoil(121);
+  mb.addCoil(122);
+  mb.addCoil(123);
+  
   //for (int i = 100; i <= 123; i++)
   //{
   //  mb.addIsts(i);
@@ -199,10 +205,10 @@ void loop() {
   mb.Ists(101, pca9557digitalRead(0x18, 1));
   mb.Ists(102, pca9557digitalRead(0x18, 2));
   mb.Ists(103, pca9557digitalRead(0x18, 3));
-  mb.Ists(104, pca9557digitalRead(0x18, 4));
-  mb.Ists(105, pca9557digitalRead(0x18, 5));
-  mb.Ists(106, pca9557digitalRead(0x18, 6));
-  mb.Ists(107, pca9557digitalRead(0x18, 7));
+  mb.Ists(104, pca9557digitalRead(0x18, 4)); // SERVO_1_RIGHT_IN
+  mb.Ists(105, pca9557digitalRead(0x18, 5)); // SERVO_1_LEFT_IN
+  mb.Ists(106, pca9557digitalRead(0x18, 6)); // SERVO_1_RIGHT_OUT
+  mb.Ists(107, pca9557digitalRead(0x18, 7)); // SERVO_1_LEFT_OUT
 
   mb.Ists(108, pca9557digitalRead(0x19, 0));
   mb.Ists(109, pca9557digitalRead(0x19, 1));
@@ -228,17 +234,35 @@ void loop() {
   //  mb.Ists(x++, pca9557digitalRead(0x18,i);
   //}
 
-       //mb.Coil(99, digitalRead(13));
-       /*mb.Coil(100, readbit(0x18,0));
-       mb.Coil(101, readbit(0x18,1));
-       mb.Coil(102, readbit(0x18,2));
-       mb.Coil(103, readbit(0x18,3));
-       mb.Coil(104, readbit(0x18,4));
-       mb.Coil(105, readbit(0x18,5));
-       mb.Coil(106, readbit(0x18,6));
-       mb.Coil(107, readbit(0x18,7));*/
-  if (!digitalRead(2) || mb.Coil(100))
-       //if (mb.Coil(100))
+  //mb.Coil(99, digitalRead(13));
+  pca9557digitalWrite(0x18, 0, mb.Coil(100));
+  pca9557digitalWrite(0x18, 1, mb.Coil(101));
+  pca9557digitalWrite(0x18, 2, mb.Coil(102));
+  pca9557digitalWrite(0x18, 3, mb.Coil(103));
+  pca9557digitalWrite(0x18, 4, mb.Coil(104));
+  pca9557digitalWrite(0x18, 5, mb.Coil(105));
+  pca9557digitalWrite(0x18, 6, mb.Coil(106));
+  pca9557digitalWrite(0x18, 7, mb.Coil(107));
+
+  pca9557digitalWrite(0x19, 0, mb.Coil(108));
+  pca9557digitalWrite(0x19, 1, mb.Coil(109));
+  pca9557digitalWrite(0x19, 2, mb.Coil(110));
+  pca9557digitalWrite(0x19, 3, mb.Coil(111));
+  pca9557digitalWrite(0x19, 4, mb.Coil(112));
+  pca9557digitalWrite(0x19, 5, mb.Coil(113));
+  pca9557digitalWrite(0x19, 6, mb.Coil(114));
+  pca9557digitalWrite(0x19, 7, mb.Coil(115));
+
+  pca9557digitalWrite(0x1a, 0, mb.Coil(116));
+  pca9557digitalWrite(0x1a, 1, mb.Coil(117));
+  pca9557digitalWrite(0x1a, 2, mb.Coil(118));
+  pca9557digitalWrite(0x1a, 3, mb.Coil(119));
+  pca9557digitalWrite(0x1a, 4, mb.Coil(120));
+  pca9557digitalWrite(0x1a, 5, mb.Coil(121));
+  pca9557digitalWrite(0x1a, 6, mb.Coil(122));
+  pca9557digitalWrite(0x1a, 7, mb.Coil(123));
+  
+  /*if (!digitalRead(2) || mb.Coil(99))
   {
     pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, LOW);
     pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, HIGH);
@@ -253,5 +277,5 @@ void loop() {
     //Wire.beginTransmission(0x18);
     //Wire.write("\x01\x80");
     //Wire.endTransmission();
-  }
+  }*/
 }

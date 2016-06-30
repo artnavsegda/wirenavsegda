@@ -1,0 +1,20 @@
+#define U3_IGNIT 1
+#define SERVO_1_LEFT_OUT 7
+#define SERVO_1_RIGHT_OUT 6
+#define SERVO_1_LEFT_IN 5
+#define SERVO_1_RIGHT_IN 4
+
+#define SERVO_2_LEFT_OUT 3
+#define SERVO_2_RIGHT_OUT 2
+#define SERVO_2_LEFT_IN 1
+#define SERVO_2_RIGHT_IN 7
+
+#define SERVO_3_LEFT_OUT 6
+#define SERVO_3_RIGHT_OUT 5
+#define SERVO_3_LEFT_IN 4
+#define SERVO_3_RIGHT_IN 3
+
+#define SERVO_4_LEFT_OUT 2
+#define SERVO_4_RIGHT_OUT 1
+#define SERVO_4_LEFT_IN 7
+#define SERVO_4_RIGHT_IN 6
