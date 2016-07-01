@@ -51,9 +51,26 @@ void setup() {
   mb.addHreg(108);
   mb.addHreg(109);
 
+  mb.addHreg(200);
+  mb.addHreg(201);
+  mb.addHreg(202);
+  mb.addHreg(203); 
+  mb.addHreg(204);
+  mb.addHreg(205);
+  mb.addHreg(206); // temp
+  mb.addHreg(207); // temp
+  mb.addHreg(208);
+  mb.addHreg(209);
+  mb.addHreg(210);
+  mb.addHreg(211);
+  mb.addHreg(212);
+  mb.addHreg(213);
+  mb.addHreg(214);
+  mb.addHreg(215);
+
 //  mb.addCoil(99);
 
-  mb.addIsts(100);
+  /*mb.addIsts(100);
   mb.addIsts(101);
   mb.addIsts(102);
   mb.addIsts(103);
@@ -101,7 +118,7 @@ void setup() {
   mb.addCoil(120);
   mb.addCoil(121);
   mb.addCoil(122);
-  mb.addCoil(123);
+  mb.addCoil(123);*/
   
   //for (int i = 100; i <= 123; i++)
   //{
@@ -132,6 +149,19 @@ int readbit(uint8_t addr, uint8_t bit)
   return LOW;
 }
 
+void modbus_set_float_abcd(float f, int location)
+{
+    uint32_t i;
+
+    memcpy(&i, &f, sizeof(uint32_t));
+    mb.Hreg(location+1, (uint16_t)(i >> 16));
+    //location++;
+    mb.Hreg(location, (uint16_t)i);
+}
+
+const float popugai = (3.0/1.6)/4095;
+const int adczero = 180;
+
 void loop() {
    //Call once inside loop() - all magic here
   mb.task();
@@ -151,7 +181,16 @@ void loop() {
   mb.Hreg(108, readvalue(0x08));
   mb.Hreg(109, readvalue(0x09));
 
-  mb.Ists(100, pca9557digitalRead(0x18, 0));
+  modbus_set_float_abcd((readvalue(0x00)-adczero)*popugai,200);
+  modbus_set_float_abcd((readvalue(0x01)-adczero)*popugai,202);
+  modbus_set_float_abcd((readvalue(0x02)-adczero)*popugai,204);
+  modbus_set_float_abcd((readvalue(0x03)-adczero)*popugai,206);
+  modbus_set_float_abcd((readvalue(0x04)-adczero)*popugai,208);
+  modbus_set_float_abcd((readvalue(0x05)-adczero)*popugai,210);
+  modbus_set_float_abcd((readvalue(0x06)-adczero)*popugai,212);
+  modbus_set_float_abcd((readvalue(0x07)-adczero)*popugai,214);
+
+  /*mb.Ists(100, pca9557digitalRead(0x18, 0));
   mb.Ists(101, pca9557digitalRead(0x18, 1));
   mb.Ists(102, pca9557digitalRead(0x18, 2));
   mb.Ists(103, pca9557digitalRead(0x18, 3));
@@ -176,7 +215,7 @@ void loop() {
   mb.Ists(120, pca9557digitalRead(0x1a, 4));
   mb.Ists(121, pca9557digitalRead(0x1a, 5));
   mb.Ists(122, pca9557digitalRead(0x1a, 6));
-  mb.Ists(123, pca9557digitalRead(0x1a, 7));
+  mb.Ists(123, pca9557digitalRead(0x1a, 7));*/
 
   //int x;
   //for (int i = 0, i <= 7, i++)
@@ -185,7 +224,7 @@ void loop() {
   //}
 
   //mb.Coil(99, digitalRead(13));
-  pca9557digitalWrite(0x18, 0, mb.Coil(100));
+  /*pca9557digitalWrite(0x18, 0, mb.Coil(100));
   pca9557digitalWrite(0x18, 1, mb.Coil(101));
   pca9557digitalWrite(0x18, 2, mb.Coil(102));
   pca9557digitalWrite(0x18, 3, mb.Coil(103));
@@ -210,7 +249,7 @@ void loop() {
   pca9557digitalWrite(0x1a, 4, mb.Coil(120));
   pca9557digitalWrite(0x1a, 5, mb.Coil(121));
   pca9557digitalWrite(0x1a, 6, mb.Coil(122));
-  pca9557digitalWrite(0x1a, 7, mb.Coil(123));
+  pca9557digitalWrite(0x1a, 7, mb.Coil(123));*/
   
   /*if (!digitalRead(2) || mb.Coil(99))
   {
