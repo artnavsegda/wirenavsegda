@@ -50,6 +50,8 @@ void setup() {
   mb.addHreg(107);
   mb.addHreg(108);
   mb.addHreg(109);
+  mb.addHreg(110);
+  mb.addHreg(111);
 
   mb.addHreg(200);
   mb.addHreg(201);
@@ -57,8 +59,8 @@ void setup() {
   mb.addHreg(203); 
   mb.addHreg(204);
   mb.addHreg(205);
-  mb.addHreg(206); // temp
-  mb.addHreg(207); // temp
+  mb.addHreg(206); // temp in v
+  mb.addHreg(207); // temp in v
   mb.addHreg(208);
   mb.addHreg(209);
   mb.addHreg(210);
@@ -67,8 +69,10 @@ void setup() {
   mb.addHreg(213);
   mb.addHreg(214);
   mb.addHreg(215);
+  mb.addHreg(216); // temp in c
+  mb.addHreg(217); // temp in c
 
-//  mb.addCoil(99);
+  mb.addCoil(100);
 
   /*mb.addIsts(100);
   mb.addIsts(101);
@@ -159,8 +163,8 @@ void modbus_set_float_abcd(float f, int location)
     mb.Hreg(location, (uint16_t)i);
 }
 
-const float popugai = (3.0/1.6)/4095;
-const int adczero = 180;
+const float popugai = 0.49487e-3;
+const int adczero = 178;
 
 void loop() {
    //Call once inside loop() - all magic here
@@ -189,6 +193,7 @@ void loop() {
   modbus_set_float_abcd((readvalue(0x05)-adczero)*popugai,210);
   modbus_set_float_abcd((readvalue(0x06)-adczero)*popugai,212);
   modbus_set_float_abcd((readvalue(0x07)-adczero)*popugai,214);
+  modbus_set_float_abcd((((readvalue(0x03)-adczero)*popugai)-0.5)*100,216);
 
   /*mb.Ists(100, pca9557digitalRead(0x18, 0));
   mb.Ists(101, pca9557digitalRead(0x18, 1));
@@ -251,20 +256,14 @@ void loop() {
   pca9557digitalWrite(0x1a, 6, mb.Coil(122));
   pca9557digitalWrite(0x1a, 7, mb.Coil(123));*/
   
-  /*if (!digitalRead(2) || mb.Coil(99))
+  if (!digitalRead(2) || mb.Coil(100))
   {
     pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, LOW);
     pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, HIGH);
-    //Wire.beginTransmission(0x18);
-    //Wire.write("\x01\x40");
-    //Wire.endTransmission();
   }
   else
   {
     pca9557digitalWrite(0x18, SERVO_1_RIGHT_OUT, LOW);
     pca9557digitalWrite(0x18, SERVO_1_LEFT_OUT, HIGH);
-    //Wire.beginTransmission(0x18);
-    //Wire.write("\x01\x80");
-    //Wire.endTransmission();
-  }*/
+  }
 }
