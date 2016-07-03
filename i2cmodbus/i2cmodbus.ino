@@ -188,12 +188,13 @@ void loop() {
   modbus_set_float_abcd((readvalue(0x00)-adczero)*popugai,200);
   modbus_set_float_abcd((readvalue(0x01)-adczero)*popugai,202);
   modbus_set_float_abcd((readvalue(0x02)-adczero)*popugai,204);
-  modbus_set_float_abcd((readvalue(0x03)-adczero)*popugai,206);
+  //modbus_set_float_abcd((readvalue(0x03)-adczero)*popugai,206);
   modbus_set_float_abcd((readvalue(0x04)-adczero)*popugai,208);
   modbus_set_float_abcd((readvalue(0x05)-adczero)*popugai,210);
   modbus_set_float_abcd((readvalue(0x06)-adczero)*popugai,212);
   modbus_set_float_abcd((readvalue(0x07)-adczero)*popugai,214);
-  modbus_set_float_abcd((((readvalue(0x03)-adczero)*popugai)-0.5)*100,216);
+  modbus_set_float_abcd((((readvalue(0x03)-adczero)*popugai)-0.5)*100,206);
+  modbus_set_float_abcd((readvalue(0x08)-0x17CC)*0.05,216);
 
   /*mb.Ists(100, pca9557digitalRead(0x18, 0));
   mb.Ists(101, pca9557digitalRead(0x18, 1));

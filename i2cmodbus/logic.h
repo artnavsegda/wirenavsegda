@@ -18,3 +18,10 @@
 #define SERVO_4_RIGHT_OUT 1
 #define SERVO_4_LEFT_IN 7
 #define SERVO_4_RIGHT_IN 6
+
+#define RELAY_1 0 // u1
+#define RELAY_2 0 // u2
+#define VALVE_1 2 // u3
+#define VALVE_2 3 // u3
+#define VALVE_3 4 // u3
+#define VALVE_4 5 // u3
