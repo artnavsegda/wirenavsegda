@@ -6,6 +6,8 @@
 #include <ModbusIP_ENC28J60.h>
 
 ModbusIP mb;
+int memaddr;
+int firstbyte;
 
 void setup() {
   // put your setup code here, to run once:
@@ -23,8 +25,12 @@ void loop() {
 }
 
 void receiveEvent(int howMany) {
-  int where = Wire.read();
-  int what = Wire.read();
-  mb.Hreg(where,what);
+  if (Wire.available()) {
+    memaddr = Wire.read();
+  }
+  if (Wire.available()) {
+    firstbyte = Wire.read();
+    mb.Hreg(memaddr,firstbyte);
+  }
 }
 
