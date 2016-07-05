@@ -10,6 +10,9 @@
 // This example code is in the public domain.
 
 
+#define MSB(u16) (((uint8_t* )&u16)[1])
+#define LSB(u16) (((uint8_t* )&u16)[0])
+
 #include <Wire.h>
 
 int x, y;
@@ -45,12 +48,20 @@ void receiveEvent(int howMany) {
   {
     Serial.println("first content byte recieved");
     firstbyte = Wire.read();
-    massive[memaddr] = firstbyte;
   }
   if (Wire.available())
   {
     Serial.println("second content byte recieved");
     secondbyte = Wire.read();
+  }
+  if (howMany == 2)
+  {
+    massive[memaddr] = firstbyte;
+  }
+  if (howMany == 3)
+  {
+    LSB(massive[memaddr]) = firstbyte;
+    MSB(massive[memaddr]) = secondbyte;
   }
   Serial.println(howMany);         // print the integer
   Serial.println(Wire.available());
@@ -61,8 +72,18 @@ void receiveEvent(int howMany) {
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent() {
-  Wire.write(massive[memaddr]);
+  //Wire.write(massive[memaddr]);
   //Wire.write(0x00);
-  //Wire.write(0x00);
+  
+  //int x = 0x1678;
+  
+  //Wire.write(x);
+  //Wire.write(x>>8);
+  
+  //Wire.write(massive[memaddr]);
+  //Wire.write(massive[memaddr]>>8);
+
+  Wire.write(LSB(massive[memaddr]));
+  Wire.write(MSB(massive[memaddr]));
 }
 
