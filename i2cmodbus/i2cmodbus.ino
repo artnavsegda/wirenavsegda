@@ -184,6 +184,10 @@ void loop() {
   mb.Hreg(107, readvalue(0x07));
   mb.Hreg(108, readvalue(0x08));
   mb.Hreg(109, readvalue(0x09));
+  mb.Hreg(110, readvalue(0x0a));
+  mb.Hreg(111, readvalue(0x0b));
+  mb.Hreg(112, readvalue(0x0c));
+  mb.Hreg(113, readvalue(0x0d));
 
   modbus_set_float_abcd((readvalue(0x00)-adczero)*popugai,200);
   modbus_set_float_abcd((readvalue(0x01)-adczero)*popugai,202);
