@@ -75,15 +75,16 @@ void requestEvent() {
   //Wire.write(massive[memaddr]);
   //Wire.write(0x00);
   
-  //int x = 0x1678;
-  
-  //Wire.write(x);
+  int x = 0x1678;
+
+  Wire.write(x>>8);
+  Wire.write(x);
   //Wire.write(x>>8);
   
   //Wire.write(massive[memaddr]);
   //Wire.write(massive[memaddr]>>8);
 
-  Wire.write(LSB(massive[memaddr]));
-  Wire.write(MSB(massive[memaddr]));
+  //Wire.write(LSB(massive[memaddr]));
+  //Wire.write(MSB(massive[memaddr]));
 }
 

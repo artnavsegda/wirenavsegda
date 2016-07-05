@@ -53,9 +53,14 @@ void receiveEvent(int howMany) {
 }
 
 void requestEvent() {
+  uint8_t buf[2];
+  buf[0] = mb.Hreg(memaddr);
+  buf[1] = mb.Hreg(memaddr)>>8;
+  Wire.write(buf,2);
   //Wire.write(mb.Hreg(memaddr));
-  regdata = mb.Hreg(memaddr);
-  Wire.write(LSB(regdata));
-  Wire.write(MSB(regdata));
+  //Wire.write(mb.Hreg(memaddr)>>8);
+  //regdata = mb.Hreg(memaddr);
+  //Wire.write(LSB(regdata));
+  //Wire.write(MSB(regdata));
 }
 
