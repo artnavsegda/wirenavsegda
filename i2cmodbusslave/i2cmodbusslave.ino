@@ -14,7 +14,7 @@ void setup() {
   byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
   byte ip[] = { 192, 168, 1, 120 };
   mb.config(mac, ip);
-  mb.addCoil(100);
+  mb.addHreg(100);
 }
 
 void loop() {
