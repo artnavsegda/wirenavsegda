@@ -23,6 +23,7 @@ void setup() {
   byte ip[] = { 192, 168, 1, 120 };
   mb.config(mac, ip);
   mb.addHreg(100);
+  mb.addHreg(100);
 }
 
 void loop() {
