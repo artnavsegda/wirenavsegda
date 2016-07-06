@@ -22,8 +22,8 @@ void setup() {
   byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
   byte ip[] = { 192, 168, 1, 120 };
   mb.config(mac, ip);
-  mb.addHreg(100);
-  mb.addHreg(100);
+  mb.addHreg(10);//total
+  mb.addHreg(11);//total
 }
 
 void loop() {
@@ -58,10 +58,5 @@ void requestEvent() {
   buf[0] = mb.Hreg(memaddr);
   buf[1] = mb.Hreg(memaddr)>>8;
   Wire.write(buf,2);
-  //Wire.write(mb.Hreg(memaddr));
-  //Wire.write(mb.Hreg(memaddr)>>8);
-  //regdata = mb.Hreg(memaddr);
-  //Wire.write(LSB(regdata));
-  //Wire.write(MSB(regdata));
 }
 
