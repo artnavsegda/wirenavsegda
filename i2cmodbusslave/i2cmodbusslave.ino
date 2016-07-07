@@ -8,9 +8,6 @@
 #define MSB(u16) (((uint8_t* )&u16)[1])
 #define LSB(u16) (((uint8_t* )&u16)[0])
 
-#define STARTLEVEL 5
-#define NODATA 1
-
 ModbusIP mb;
 int memaddr;
 int firstbyte;
@@ -25,8 +22,12 @@ void setup() {
   byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
   byte ip[] = { 192, 168, 1, 120 };
   mb.config(mac, ip);
-  mb.addHreg(8,STARTLEVEL);//code of current mode
-  mb.addHreg(9);//code of current mode - blank ?
+  mb.addCoil(0,false);//status of spectrometer
+  mb.addCoil(1,true);//status of thermocontrollers
+  mb.addCoil(2,false);//availibility for external request
+  mb.addCoil(3,false);//status of zero test
+  mb.addCoil(4,false);//status of calibration
+  mb.addHreg(8);mb.addHreg(9);//code of current mode
   mb.addHreg(10); mb.addHreg(11);//total
   mb.addHreg(12); mb.addHreg(13);//oxidized
   mb.addHreg(14); mb.addHreg(15);//monitor flow
@@ -34,13 +35,11 @@ void setup() {
   mb.addHreg(18); mb.addHreg(19);//dilution pressure
   mb.addHreg(20); mb.addHreg(21);//bypass pressure
   mb.addHreg(22); mb.addHreg(23);//temp
-  mb.addHreg(28,NODATA);//errors and warnings
-  mb.addHreg(30); mb.addHreg(31);//vacuum
-  mb.addCoil(1,false);//status of spectrometer
-  mb.addCoil(2,true);//status of thermocontrollers
-  mb.addCoil(3,false);//availibility for external request
-  mb.addCoil(4,false);//status of zero test
-  mb.addCoil(5,false);//status of calibration
+  mb.addHreg(24); mb.addHreg(25);//elemental
+  mb.addHreg(26); mb.addHreg(27);//not used
+  mb.addHreg(28); mb.addHreg(29);//errors and warnings
+  mb.addHreg(30); mb.addHreg(31);//coefficent
+  mb.addHreg(30); mb.addHreg(31);//lamp
   mb.addCoil(99,false);//run calibration
   mb.addCoil(100,false);//run zero test
   mb.addCoil(101,false);//run elemental
@@ -70,12 +69,11 @@ void receiveEvent(int howMany) {
 }
 
 void requestEvent() {
-  uint8_t buf[2];
-  uint16_t replymessage;
   if (memaddr<=5||memaddr>=99)
-      Wire.write(mb.Coil(memaddr));
+    Wire.write(mb.Coil(memaddr));
   else {
-    replymessage = mb.Hreg(memaddr);
+    uint16_t replymessage = mb.Hreg(memaddr);
+    uint8_t buf[2];
     buf[0] = LSB(replymessage);
     buf[1] = MSB(replymessage);
     Wire.write(buf,2);
