@@ -39,7 +39,7 @@ void setup() {
   mb.addHreg(26); mb.addHreg(27);//not used
   mb.addHreg(28); mb.addHreg(29);//errors and warnings
   mb.addHreg(30); mb.addHreg(31);//coefficent
-  mb.addHreg(30); mb.addHreg(31);//lamp
+  mb.addHreg(32); mb.addHreg(33);//lamp
   mb.addCoil(99,false);//run calibration
   mb.addCoil(100,false);//run zero test
   mb.addCoil(101,false);//run elemental
