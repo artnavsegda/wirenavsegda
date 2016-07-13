@@ -24,7 +24,7 @@ void setup() {
   mb.config(mac, ip);
   mb.addCoil(0,false);//status of spectrometer
   mb.addCoil(1,true);//status of thermocontrollers
-  mb.addCoil(2,false);//availibility for external request
+  mb.addCoil(2,false);//availability for external request
   mb.addCoil(3,false);//status of zero test
   mb.addCoil(4,false);//status of calibration
   mb.addHreg(8);mb.addHreg(9);//code of current mode
@@ -38,7 +38,7 @@ void setup() {
   mb.addHreg(24); mb.addHreg(25);//elemental
   mb.addHreg(26); mb.addHreg(27);//not used
   mb.addHreg(28); mb.addHreg(29);//errors and warnings
-  mb.addHreg(30); mb.addHreg(31);//coefficent
+  mb.addHreg(30); mb.addHreg(31);//coefficient
   mb.addHreg(32); mb.addHreg(33);//lamp
   mb.addCoil(99,false);//run calibration
   mb.addCoil(100,false);//run zero test
