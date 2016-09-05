@@ -26,8 +26,6 @@ float STARTCOEFF=1.0;
 
 ModbusIP mb;
 int memaddr;
-int firstbyte;
-int secondbyte;
 int regdata;
 
 void setcoils(int start, int amount)
@@ -119,16 +117,25 @@ void loop() {
 void receiveEvent(int howMany) {
   if (Wire.available())
     memaddr = Wire.read();
-  if (Wire.available())
-    firstbyte = Wire.read();
-  if (Wire.available())
-    secondbyte = Wire.read();
-  if (howMany == 2)
-    mb.Coil(memaddr,firstbyte);
-  if (howMany == 3) {
-    LSB(regdata) = firstbyte;
-    MSB(regdata) = secondbyte;
-    mb.Hreg(memaddr,regdata);
+  switch (howMany) {
+    case 2:
+      mb.Coil(memaddr,Wire.read());
+    break;
+    case 3:
+      LSB(regdata) = Wire.read();
+      MSB(regdata) = Wire.read();
+      mb.Hreg(memaddr,regdata);
+    break;
+    case 5:
+      LSB(regdata) = Wire.read();
+      MSB(regdata) = Wire.read();
+      mb.Hreg(memaddr,regdata);
+      LSB(regdata) = Wire.read();
+      MSB(regdata) = Wire.read();
+      mb.Hreg(memaddr+1,regdata);
+    break;
+    default:
+    break;
   }
 }
 
