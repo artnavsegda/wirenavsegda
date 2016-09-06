@@ -118,29 +118,135 @@ void receiveEvent(int howMany) {
   if (Wire.available())
     memaddr = Wire.read();
   switch (howMany) {
+    case 1:
+      return;
+    break;
     case 2:
-      mb.Coil(memaddr,Wire.read());
+      switch (memaddr) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 99:
+        case 100:
+        case 101:
+        case 102:
+        case 103:
+          mb.Coil(memaddr,Wire.read());
+        break;
+        default:
+        break;
+      }
     break;
     case 3:
-      LSB(regdata) = Wire.read();
-      MSB(regdata) = Wire.read();
-      mb.Hreg(memaddr,regdata);
+      switch (memaddr) {
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+        case 28:
+        case 29:
+        case 30:
+        case 31:
+          LSB(regdata) = Wire.read();
+          MSB(regdata) = Wire.read();
+          mb.Hreg(memaddr,regdata);
+        break;
+        default:
+        break;
+      }
     break;
     case 5:
-      LSB(regdata) = Wire.read();
-      MSB(regdata) = Wire.read();
-      mb.Hreg(memaddr,regdata);
-      LSB(regdata) = Wire.read();
-      MSB(regdata) = Wire.read();
-      mb.Hreg(memaddr+1,regdata);
+      switch (memaddr) {
+        case 8:
+        case 10:
+        case 11:
+        case 12:
+        case 14:
+        case 16:
+        case 18:
+        case 20:
+        case 22:
+        case 24:
+        case 28:
+        case 30:
+          LSB(regdata) = Wire.read();
+          MSB(regdata) = Wire.read();
+          mb.Hreg(memaddr,regdata);
+          LSB(regdata) = Wire.read();
+          MSB(regdata) = Wire.read();
+          mb.Hreg(memaddr+1,regdata);
+        break;
+        default:
+        break;
+      }
     break;
     default:
     break;
   }
 }
 
+void writemultiregister(uint8_t address)
+{
+  uint8_t buf[4];
+  uint16_t replymessage;
+  replymessage = mb.Hreg(memaddr);
+  buf[0] = LSB(replymessage);
+  buf[1] = MSB(replymessage);
+  replymessage = mb.Hreg(memaddr+1);
+  buf[2] = LSB(replymessage);
+  buf[3] = MSB(replymessage);
+  Wire.write(buf,4);
+}
+
 void requestEvent() {
-  if (memaddr<=5||memaddr>=99)
+  switch (memaddr) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 99:
+    case 100:
+    case 101:
+    case 102:
+    case 103:
+      Wire.write(mb.Coil(memaddr));
+    break;
+    case 8:
+    case 10:
+    case 12:
+    case 14:
+    case 16:
+    case 18:
+    case 20:
+    case 22:
+    case 24:
+    case 28:
+    case 30:
+      writemultiregister(memaddr);
+      //Wire.write(mb.Hreg(memaddr),2);
+      //Wire.write(mb.Hreg(memaddr+1),2);
+    break;
+    default:
+    break;
+  }
+  /*if (memaddr<=5||memaddr>=99)
     Wire.write(mb.Coil(memaddr));
   else {
     uint16_t replymessage = mb.Hreg(memaddr);
@@ -148,6 +254,6 @@ void requestEvent() {
     buf[0] = LSB(replymessage);
     buf[1] = MSB(replymessage);
     Wire.write(buf,2);
-  }
+  }*/
 }
 
