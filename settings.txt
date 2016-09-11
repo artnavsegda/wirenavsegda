@@ -1,0 +1,15 @@
+ip = 192.168.1.120
+mac = de:ad:be:ef:12:34
+startlevel = 100
+precalibrationdelay = 100
+calibration = 100
+postcalibrationdelay = 100
+celldelay = 100
+celllevel = 100
+zerodelay = 100
+zerotest = 100
+totalmercurydelay = 100
+totalmercury = 100
+elementalmercurydelay = 100
+elementalmercury = 100
+purge = 100
