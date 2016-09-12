@@ -35,11 +35,11 @@ void setup() {
   Serial.print("Post-Calibration Delay: "); Serial.println(e.length_table[11],DEC);
   Serial.print("Purge: "); Serial.println(e.length_table[12],DEC);
 
-  mb.addHreg(100);
-  mb.addHreg(101);
-  mb.addHreg(102,0xDEAD);
-  mb.addHreg(103,0xBEEF);
-  mb.addHreg(104,0x1234);
+  mb.addHreg(100, ((uint16_t)e.ip[0]<<8)|e.ip[1]);
+  mb.addHreg(101, ((uint16_t)e.ip[2]<<8)|e.ip[3]);
+  mb.addHreg(102, ((uint16_t)e.mac[0]<<8)|e.mac[1]);
+  mb.addHreg(103, ((uint16_t)e.mac[2]<<8)|e.mac[3]);
+  mb.addHreg(104, ((uint16_t)e.mac[4]<<8)|e.mac[5]);
 }
 
 void loop() {
