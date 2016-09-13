@@ -1,4 +1,5 @@
 #include <EEPROM.h>
+#include <Wire.h>
 #include <EtherCard.h>
 #include <Modbus.h>
 #include <ModbusIP_ENC28J60.h>
@@ -55,8 +56,29 @@ void setup() {
   mb.addHreg(116, e.length_table[11]);
   mb.addHreg(117, e.length_table[12]);
 
-  mb.addCoil(100, false);//write eeprom
-  mb.addCoil(101, false);//reinitialize
+  mb.addCoil(1100, false);//write eeprom
+  mb.addCoil(1101, false);//reinitialize
+  Wire.begin(8);
+  Wire.onReceive(receiveEvent);
+  Wire.onRequest(requestEvent);
+}
+
+void receiveEvent(int howMany) {
+  if (Wire.available())
+    memaddr = Wire.read();
+}
+
+void requestEvent() {
+  switch (memaddr) {
+    case 100:
+      Wire.write(e.ip,4);
+    break;
+    case 101:
+      Wire.write(e.ip,4);
+    break;
+    default:
+    break;
+  }
 }
 
 void loop() {
