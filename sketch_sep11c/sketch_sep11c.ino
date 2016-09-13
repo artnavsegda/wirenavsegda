@@ -40,6 +40,20 @@ void setup() {
   mb.addHreg(102, ((uint16_t)e.mac[0]<<8)|e.mac[1]);
   mb.addHreg(103, ((uint16_t)e.mac[2]<<8)|e.mac[3]);
   mb.addHreg(104, ((uint16_t)e.mac[4]<<8)|e.mac[5]);
+  
+  mb.addHreg(105, e.length_table[0]);
+  mb.addHreg(106, e.length_table[1]);
+  mb.addHreg(107, e.length_table[2]);
+  mb.addHreg(108, e.length_table[3]);
+  mb.addHreg(109, e.length_table[4]);
+  mb.addHreg(110, e.length_table[5]);
+  mb.addHreg(111, e.length_table[6]);
+  mb.addHreg(112, e.length_table[7]);
+  mb.addHreg(113, e.length_table[8]);
+  mb.addHreg(114, e.length_table[9]);
+  mb.addHreg(115, e.length_table[10]);
+  mb.addHreg(116, e.length_table[11]);
+  mb.addHreg(117, e.length_table[12]);
 }
 
 void loop() {
