@@ -55,15 +55,16 @@ void setup() {
   mb.addHreg(116, e.length_table[11]);
   mb.addHreg(117, e.length_table[12]);
 
-  mb.addCoil(100, FALSE);
+  mb.addCoil(100, false);//write eeprom
+  mb.addCoil(101, false);//reinitialize
 }
 
 void loop() {
    //Call once inside loop() - all magic here
    mb.task();
    
-   if(mb.Coil(100) {
-    mb.Coil(100, FALSE);
+   if(mb.Coil(100)) {
+    mb.Coil(100, false);
     EEPROM.put(0,mb.Hreg(100)); EEPROM.put(2,mb.Hreg(101));
     EEPROM.put(4,mb.Hreg(102)); EEPROM.put(6,mb.Hreg(103)); EEPROM.put(8,mb.Hreg(104));
     EEPROM.put(10,mb.Hreg(105));
@@ -79,5 +80,9 @@ void loop() {
     EEPROM.put(30,mb.Hreg(115));
     EEPROM.put(32,mb.Hreg(116));
     EEPROM.put(34,mb.Hreg(117));
+   }
+   if(mb.Coil(101)) {
+    mb.Coil(101, false);
+    setup();
    }
 }
