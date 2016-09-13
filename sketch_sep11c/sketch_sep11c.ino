@@ -54,10 +54,30 @@ void setup() {
   mb.addHreg(115, e.length_table[10]);
   mb.addHreg(116, e.length_table[11]);
   mb.addHreg(117, e.length_table[12]);
+
+  mb.addCoil(100, FALSE);
 }
 
 void loop() {
    //Call once inside loop() - all magic here
    mb.task();
-
+   
+   if(mb.Coil(100) {
+    mb.Coil(100, FALSE);
+    EEPROM.put(0,mb.Hreg(100)); EEPROM.put(2,mb.Hreg(101));
+    EEPROM.put(4,mb.Hreg(102)); EEPROM.put(6,mb.Hreg(103)); EEPROM.put(8,mb.Hreg(104));
+    EEPROM.put(10,mb.Hreg(105));
+    EEPROM.put(12,mb.Hreg(106));
+    EEPROM.put(14,mb.Hreg(107));
+    EEPROM.put(16,mb.Hreg(108));
+    EEPROM.put(18,mb.Hreg(109));
+    EEPROM.put(20,mb.Hreg(110));
+    EEPROM.put(22,mb.Hreg(111));
+    EEPROM.put(24,mb.Hreg(112));
+    EEPROM.put(26,mb.Hreg(113));
+    EEPROM.put(28,mb.Hreg(114));
+    EEPROM.put(30,mb.Hreg(115));
+    EEPROM.put(32,mb.Hreg(116));
+    EEPROM.put(34,mb.Hreg(117));
+   }
 }
