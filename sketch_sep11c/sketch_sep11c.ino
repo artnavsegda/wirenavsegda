@@ -74,7 +74,7 @@ void requestEvent() {
       Wire.write(e.ip,4);
     break;
     case 101:
-      Wire.write(e.ip,4);
+      Wire.write(e.mac,6);
     break;
     default:
     break;
