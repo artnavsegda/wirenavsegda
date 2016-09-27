@@ -4,7 +4,7 @@
 struct MyObject {
   byte ip[4];
   byte mac[6];
-  unsigned short length_table[13];
+  byte length_table[26];
   byte jump_table[13];
 };
 
@@ -31,6 +31,9 @@ void requestEvent() {
     break;
     case 101:
       Wire.write(e.mac,6);
+    break;
+    case 102:
+      Wire.write(e.length_table,26);
     break;
     default:
     break;
