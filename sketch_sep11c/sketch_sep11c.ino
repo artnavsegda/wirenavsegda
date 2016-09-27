@@ -13,10 +13,11 @@ struct MyObject {
 
 //ModbusIP object
 ModbusIP mb;
+int memaddr;
+MyObject e;
 
 void setup() {
   // put your setup code here, to run once:
-  MyObject e;
   EEPROM.get(0, e);
   Serial.begin(9600);
   mb.config(e.mac, e.ip);
