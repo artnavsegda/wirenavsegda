@@ -1,10 +1,14 @@
 #include <EEPROM.h>
 #include <Wire.h>
 
+#define I2C_IPADDRESS 100
+#define I2C_MACADDRESS 101
+#define I2C_LENGTHTABLE 102
+
 struct MyObject {
   byte ip[4];
   byte mac[6];
-  byte length_table[26];
+  unsigned short length_table[13];
   byte jump_table[13];
 };
 
@@ -26,14 +30,14 @@ void receiveEvent(int howMany) {
 
 void requestEvent() {
   switch (memaddr) {
-    case 100:
+    case I2C_IPADDRESS:
       Wire.write(e.ip,4);
     break;
-    case 101:
+    case I2C_MACADDRESS:
       Wire.write(e.mac,6);
     break;
-    case 102:
-      Wire.write(e.length_table,26);
+    case I2C_LENGTHTABLE:
+      Wire.write((byte *)e.length_table,26);
     break;
     default:
     break;
