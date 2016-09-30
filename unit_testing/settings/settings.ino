@@ -23,19 +23,19 @@ enum modelist {
 };
 
 struct lengthtablestruct {
-  int startlevel;
-  int celldelay;
-  int celllevel;
-  int zerodelay;
-  int zerotest;
-  int purge;
-  int totalmercurydelay;
-  int totalmercury;
-  int elementalmercurydelay;
-  int elementalmercury;
-  int precalibrationdelay;
-  int calibration;
-  int postcalibrationdelay;
+  unsigned short startlevel;
+  unsigned short celldelay;
+  unsigned short celllevel;
+  unsigned short zerodelay;
+  unsigned short zerotest;
+  unsigned short purge;
+  unsigned short totalmercurydelay;
+  unsigned short totalmercury;
+  unsigned short elementalmercurydelay;
+  unsigned short elementalmercury;
+  unsigned short precalibrationdelay;
+  unsigned short calibration;
+  unsigned short postcalibrationdelay;
 };
 
 struct jumptablestruct {
@@ -68,8 +68,23 @@ void setup() {
   // put your setup code here, to run once:
   EEPROM.get(0, e);
   Wire.begin(8);
+  Serial.begin(9600);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
+  Serial.println("EEPROM test");
+  Serial.print("startlevel: ");Serial.println(e.length_table.startlevel);
+  Serial.print("celldelay: ");Serial.println(e.length_table.celldelay);
+  Serial.print("celllevel: ");Serial.println(e.length_table.celllevel);
+  Serial.print("zerodelay: ");Serial.println(e.length_table.zerodelay);
+  Serial.print("zerotest: ");Serial.println(e.length_table.zerotest);
+  Serial.print("purge: ");Serial.println(e.length_table.purge);
+  Serial.print("totalmercurydelay: ");Serial.println(e.length_table.totalmercurydelay);
+  Serial.print("totalmercury: ");Serial.println(e.length_table.totalmercury);
+  Serial.print("elementalmercurydelay: ");Serial.println(e.length_table.elementalmercurydelay);
+  Serial.print("elementalmercury: ");Serial.println(e.length_table.elementalmercury);
+  Serial.print("precalibrationdelay: ");Serial.println(e.length_table.precalibrationdelay);
+  Serial.print("calibration: ");Serial.println(e.length_table.calibration);
+  Serial.print("postcalibrationdelay: ");Serial.println(e.length_table.postcalibrationdelay);
 }
 
 void receiveEvent(int howMany) {
