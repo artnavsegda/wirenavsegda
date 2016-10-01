@@ -19,10 +19,14 @@ int memaddr;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  Serial.println("I2C unit test");
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 }
+
+char i;
+int x;
 
 void receiveEvent(int howMany) {
   if (Wire.available())
@@ -44,6 +48,14 @@ void receiveEvent(int howMany) {
       case 4:
         Wire.readBytes(e.three, 13);
         Serial.println(e.three);
+      break;
+      case 5:
+        i = Wire.read();
+        Serial.println(i);
+      case 6:
+        Wire.readBytes((byte *)&x,2);
+        Serial.println(x);
+      default:
       break;
     }
 }
