@@ -27,6 +27,8 @@ void setup() {
 
 char i;
 int x;
+float y;
+char z[5];
 
 void receiveEvent(int howMany) {
   if (Wire.available())
@@ -45,20 +47,36 @@ void receiveEvent(int howMany) {
         Wire.readBytes(e.two, 26);
         Serial.println(e.two);
       break;
-      case 4:
+      case 3:
         Wire.readBytes(e.three, 13);
         Serial.println(e.three);
       break;
       case 5:
         i = Wire.read();
         Serial.println(i);
+      break;
       case 6:
         Wire.readBytes((byte *)&x,2);
         Serial.println(x);
+       break;
+      case 7:
+        Wire.readBytes((byte *)&y,4);
+        Serial.println(y);
+        //Serial.println(Wire.read());
+        //Serial.println(Wire.read());
+        //Serial.println(Wire.read());
+        //Serial.println(Wire.read());
+      break;
+      case 8:
+        Wire.readBytes(z,5);
+        Serial.println(z);
       default:
       break;
     }
 }
+
+int xsend = 420;
+float ysend = 4.20;
 
 void requestEvent() {
   switch (memaddr) {
@@ -73,6 +91,18 @@ void requestEvent() {
     break;
     case 3:
       Wire.write(e.three,13);
+    break;
+    case 5:
+      Wire.write(42);
+    break;
+    case 6:
+      Wire.write((byte *)&xsend,2);
+    break;
+    case 7:
+      Wire.write((byte *)&ysend,4);
+    break;
+    case 8:
+      Wire.write("hello",5);
     break;
     default:
     break;
