@@ -5,6 +5,18 @@
 #define I2C_LENGTHTABLE 102
 #define I2C_JUMPTABLE 103
 
+#define I2C_ELEMENTALMERCURYROW 128
+#define I2C_TOTALMERCURYROW 129
+#define I2C_OXIDIZEDMERCURYROW 130
+#define I2C_MONITORFLOW 131
+#define I2C_VACUUM 132
+#define I2C_DILUTIONPRESSURE 133
+#define I2C_BYPASSPRESSURE 134
+#define I2C_TEMPERATUREOFSPECTROMETER 135
+#define I2C_CODEOFACURRENTMODE 136
+#define I2C_ERRORSANDWARNINGS 137
+#define I2C_TOTALMERCURYCOEFFICENT 138
+
 enum modelist {
   STARTLEVEL = 5,
   CELLDELAY = 7,
@@ -73,6 +85,13 @@ void setup() {
 void receiveEvent(int howMany) {
   if (Wire.available())
     memaddr = Wire.read();
+  if (Wire.available())
+    switch (memaddr) {
+      case I2C_TOTALMERCURYROW:
+        float totalmercuryrow;
+        Wire.readBytes(totalmercuryrow, 4);
+      break;
+    }
 }
 
 void requestEvent() {
