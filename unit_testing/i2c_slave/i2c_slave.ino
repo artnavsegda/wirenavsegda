@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <Wire.h>
 
 #define I2C_IPADDRESS 100
@@ -74,9 +75,13 @@ struct MyObject {
 
 int memaddr;
 MyObject e;
+float totalmercuryrow;
+float monitorflow;
 
 void setup() {
   // put your setup code here, to run once:
+  EEPROM.get(0, e);
+  Serial.begin(9600);
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
@@ -88,8 +93,12 @@ void receiveEvent(int howMany) {
   if (Wire.available())
     switch (memaddr) {
       case I2C_TOTALMERCURYROW:
-        float totalmercuryrow;
-        Wire.readBytes(totalmercuryrow, 4);
+        Wire.readBytes((byte *)&totalmercuryrow, 4);
+        Serial.println(totalmercuryrow);
+      break;
+      case I2C_MONITORFLOW:
+        Wire.readBytes((byte *)&monitorflow, 4);
+        Serial.println(monitorflow);
       break;
     }
 }
