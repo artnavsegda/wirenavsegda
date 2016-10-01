@@ -104,7 +104,7 @@ void requestEvent() {
       Wire.write((byte *)&e.length_table,26);
     break;
     case I2C_JUMPTABLE:
-      Wire.write((byte *)&e.jump_table,26);
+      Wire.write((byte *)&e.jump_table,13);
     break;
     default:
     break;
