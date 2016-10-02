@@ -10,7 +10,7 @@ struct MyObject {
 struct MyObject e = {
   "123",
   "12345",
-  "abcdefghijklmnopqrstuwxy",
+  "abcdefghijklmnopqrst",
   "0123456789ab"
 };
 
@@ -25,7 +25,7 @@ void setup() {
   Wire.onRequest(requestEvent);
 }
 
-char i;
+int i;
 int x;
 float y;
 char z[5];
@@ -44,7 +44,7 @@ void receiveEvent(int howMany) {
         Serial.println(e.one);
       break;
       case 2:
-        Wire.readBytes(e.two, 26);
+        Wire.readBytes(e.two, 20);
         Serial.println(e.two);
       break;
       case 3:
@@ -56,19 +56,15 @@ void receiveEvent(int howMany) {
         Serial.println(i);
       break;
       case 6:
-        Wire.readBytes((byte *)&x,2);
+        Wire.readBytes((byte *)&x,sizeof(x));
         Serial.println(x);
        break;
       case 7:
-        Wire.readBytes((byte *)&y,4);
+        Wire.readBytes((byte *)&y,sizeof(y));
         Serial.println(y);
-        //Serial.println(Wire.read());
-        //Serial.println(Wire.read());
-        //Serial.println(Wire.read());
-        //Serial.println(Wire.read());
       break;
       case 8:
-        Wire.readBytes(z,5);
+        Wire.readBytes(z,sizeof(z));
         Serial.println(z);
       default:
       break;
@@ -77,6 +73,7 @@ void receiveEvent(int howMany) {
 
 int xsend = 420;
 float ysend = 4.20;
+char zstring[] = "hello";
 
 void requestEvent() {
   switch (memaddr) {
@@ -87,7 +84,7 @@ void requestEvent() {
       Wire.write(e.one,6);
     break;
     case 2:
-      Wire.write(e.two,26);
+      Wire.write(e.two,20);
     break;
     case 3:
       Wire.write(e.three,13);
@@ -96,13 +93,13 @@ void requestEvent() {
       Wire.write(42);
     break;
     case 6:
-      Wire.write((byte *)&xsend,2);
+      Wire.write((byte *)&xsend,sizeof(xsend));
     break;
     case 7:
-      Wire.write((byte *)&ysend,4);
+      Wire.write((byte *)&ysend,sizeof(ysend));
     break;
     case 8:
-      Wire.write("hello",5);
+      Wire.write(zstring,sizeof(zstring));
     break;
     default:
     break;
