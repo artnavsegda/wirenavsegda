@@ -8,10 +8,10 @@ struct MyObject {
 };
 
 struct MyObject e = {
-  "1234",
-  "123456",
-  "abcdefghijklmnopqrstuwxyz",
-  "0123456789abc"
+  "123",
+  "12345",
+  "abcdefghijklmnopqrstuwxy",
+  "0123456789ab"
 };
 
 int memaddr;
