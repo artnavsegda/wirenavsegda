@@ -1,10 +1,13 @@
 #include <EEPROM.h>
+#include <Wire.h>
 #include <EtherCard.h>
 #include <Modbus.h>
 #include <ModbusIP_ENC28J60.h>
+#include "settings.h"
 
 ModbusIP mb;
 MyObject e;
+int memaddr;
 
 void setup() {
   Serial.begin(9600);
