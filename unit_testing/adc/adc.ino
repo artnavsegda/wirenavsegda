@@ -1,19 +1,12 @@
+#include <EEPROM.h>
 #include <Wire.h>
+#include <EtherCard.h>
+#include <Modbus.h>
+#include <ModbusIP_ENC28J60.h>
+#include "settings.h"
 
-struct MyObject {
-  char zero[4];
-  char one[6];
-  char two[26];
-  char three[13];
-};
-
-struct MyObject e = {
-  "123",
-  "12345",
-  "abcdefghijklmnopqrst",
-  "0123456789ab"
-};
-
+ModbusIP mb;
+MyObject e;
 int memaddr;
 
 void setup() {
@@ -23,6 +16,10 @@ void setup() {
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
+  EEPROM.get(0, e);
+  mb.config(e.mac, e.ip);
+  for (int i=0;i<16;i++)
+    mb.addIreg(i);
 }
 
 int i;
@@ -53,6 +50,7 @@ void receiveEvent(int howMany) {
       case 14:
       case 15:
         Wire.readBytes((byte *)&adc_scan_results[memaddr], 2);
+        mb.Ireg(memaddr,adc_scan_results[memaddr]);
         Serial.print("ADC");
         Serial.print(memaddr);
         Serial.print(" ");
@@ -63,35 +61,13 @@ void receiveEvent(int howMany) {
     }
 }
 
-int xsend = 420;
-float ysend = 4.20;
-char zstring[] = "hello";
-
 void requestEvent() {
   switch (memaddr) {
-    case 0:
-      Wire.write(e.zero,4);
+    case I2C_IPADDRESS:
+      Wire.write(e.ip,4);
     break;
-    case 1:
-      Wire.write(e.one,6);
-    break;
-    case 2:
-      Wire.write(e.two,20);
-    break;
-    case 3:
-      Wire.write(e.three,13);
-    break;
-    case 5:
-      Wire.write(42);
-    break;
-    case 6:
-      Wire.write((byte *)&xsend,sizeof(xsend));
-    break;
-    case 7:
-      Wire.write((byte *)&ysend,sizeof(ysend));
-    break;
-    case 8:
-      Wire.write(zstring,sizeof(zstring));
+    case I2C_MACADDRESS:
+      Wire.write(e.mac,6);
     break;
     default:
     break;
