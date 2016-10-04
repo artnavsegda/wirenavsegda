@@ -22,9 +22,34 @@ void loop() {
   mb.task();
 }
 
+int i;
+int x;
+float y;
+char z[5];
+
 void receiveEvent(int howMany) {
   if (Wire.available())
     memaddr = Wire.read();
+  if (Wire.available())
+    switch (memaddr) {
+      case 5:
+        i = Wire.read();
+        Serial.println(i);
+      break;
+      case 6:
+        Wire.readBytes((byte *)&x,sizeof(x));
+        Serial.println(x);
+       break;
+      case 7:
+        Wire.readBytes((byte *)&y,sizeof(y));
+        Serial.println(y);
+      break;
+      case 8:
+        Wire.readBytes(z,sizeof(z));
+        Serial.println(z);
+      default:
+      break;
+    }
 }
 
 void requestEvent() {
