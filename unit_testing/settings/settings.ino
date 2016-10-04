@@ -5,6 +5,8 @@
 #define I2C_MACADDRESS 101
 #define I2C_LENGTHTABLE 102
 #define I2C_JUMPTABLE 103
+#define I2C_AD7705_SETUP_REGISTER 104
+#define I2C_AD7705_CLOCK_REGISTER 105
 
 enum modelist {
   STARTLEVEL = 5,
@@ -59,6 +61,8 @@ struct MyObject {
   byte mac[6];
   lengthtablestruct length_table;
   jumptablestruct jump_table;
+  byte ad7705_setup_register;
+  byte ad7705_clock_register;
 };
 
 int memaddr;
@@ -120,6 +124,12 @@ void requestEvent() {
     break;
     case I2C_JUMPTABLE:
       Wire.write((byte *)&e.jump_table,13);
+    break;
+    case I2C_AD7705_SETUP_REGISTER:
+      Wire.write(e.ad7705_setup_register);
+    break;
+    case I2C_AD7705_CLOCK_REGISTER:
+      Wire.write(e.ad7705_clock_register);
     break;
     default:
     break;
