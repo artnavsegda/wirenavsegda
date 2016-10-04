@@ -1,5 +1,6 @@
 #include <EEPROM.h>
 #include <EtherCard.h>
+#include "settings.h"
 
 byte Ethernet::buffer[300];   // a very small tcp/ip buffer is enough here
 MyObject e;
