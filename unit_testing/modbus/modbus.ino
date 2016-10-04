@@ -16,6 +16,7 @@ void setup() {
   Wire.onRequest(requestEvent);
   EEPROM.get(0, e);
   mb.config(e.mac, e.ip);
+  mb.addIreg(6);
 }
 
 void loop() {
@@ -39,6 +40,7 @@ void receiveEvent(int howMany) {
       case 6:
         Wire.readBytes((byte *)&x,sizeof(x));
         Serial.println(x);
+        mb.Ireg(6,x);
        break;
       case 7:
         Wire.readBytes((byte *)&y,sizeof(y));
