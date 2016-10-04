@@ -16,7 +16,7 @@ void setup() {
   Wire.onRequest(requestEvent);
   EEPROM.get(0, e);
   mb.config(e.mac, e.ip);
-  mb.addIreg(6);
+  mb.addIreg(6,123);
 }
 
 void loop() {
