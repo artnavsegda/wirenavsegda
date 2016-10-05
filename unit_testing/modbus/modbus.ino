@@ -6,7 +6,7 @@
 #include "settings.h"
 
 ModbusIP mb;
-MyObject e;
+MyObject myeeprom;
 int memaddr;
 
 void setup() {
@@ -14,8 +14,9 @@ void setup() {
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
-  EEPROM.get(0, e);
-  mb.config(e.mac, e.ip);
+  EEPROM.get(0, myeeprom);
+  printeeprom(myeeprom);
+  mb.config(myeeprom.mac, myeeprom.ip);
   mb.addIreg(6,123);
 }
 
@@ -57,10 +58,22 @@ void receiveEvent(int howMany) {
 void requestEvent() {
   switch (memaddr) {
     case I2C_IPADDRESS:
-      Wire.write(e.ip,4);
+      Wire.write(myeeprom.ip,4);
     break;
     case I2C_MACADDRESS:
-      Wire.write(e.mac,6);
+      Wire.write(myeeprom.mac,6);
+    break;
+    case I2C_LENGTHTABLE:
+      Wire.write((byte *)&myeeprom.length_table,26);
+    break;
+    case I2C_JUMPTABLE:
+      Wire.write((byte *)&myeeprom.jump_table,13);
+    break;
+    case I2C_AD7705_SETUP_REGISTER:
+      Wire.write(myeeprom.ad7705_setup_register);
+    break;
+    case I2C_AD7705_CLOCK_REGISTER:
+      Wire.write(myeeprom.ad7705_clock_register);
     break;
     default:
     break;
