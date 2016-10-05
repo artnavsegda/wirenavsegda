@@ -4,6 +4,23 @@
 #define I2C_JUMPTABLE 103
 #define I2C_AD7705_SETUP_REGISTER 104
 #define I2C_AD7705_CLOCK_REGISTER 105
+#define I2C_ADC0 0
+#define I2C_ADC1 1
+#define I2C_ADC2 2
+#define I2C_ADC3 3
+#define I2C_ADC4 4
+#define I2C_ADC5 5
+#define I2C_ADC6 6
+#define I2C_ADC7 7
+#define I2C_ADC8 8
+#define I2C_ADC9 9
+#define I2C_ADC10 10
+#define I2C_ADC11 11
+#define I2C_ADC12 12
+#define I2C_ADC13 13
+#define I2C_ADC14 14
+#define I2C_ADC15 15
+#define I2C_AD7705_DATA 16
 
 enum modelist {
   STARTLEVEL = 5,
