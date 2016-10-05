@@ -39,8 +39,8 @@ void setup() {
   Serial.print("calibration: ");Serial.println(e.jump_table.calibration);
   Serial.print("postcalibrationdelay: ");Serial.println(e.jump_table.postcalibrationdelay);
 
-  Serial.print("AD7705 clock register:");Serial.println();
-  Serial.print("AD7705 setup register:");Serial.println();
+  Serial.print("AD7705 clock register:");Serial.println(e.ad7705_clock_register);
+  Serial.print("AD7705 setup register:");Serial.println(e.ad7705_setup_register);
 }
 
 void loop() {

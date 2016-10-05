@@ -51,4 +51,6 @@ struct MyObject {
   byte mac[6];
   lengthtablestruct length_table;
   jumptablestruct jump_table;
+  byte ad7705_setup_register;
+  byte ad7705_clock_register;
 };
