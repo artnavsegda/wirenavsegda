@@ -7,8 +7,8 @@ void setup() {
   // put your setup code here, to run once:
   EEPROM.get(0, e);
   Serial.begin(9600);
-  Serial.println("IP:");
-  Serial.println("MAC:");
+  Serial.println("IP: ");Serial.print(e.ip[0]);Serial.print(e.ip[1]);Serial.print(e.ip[2]);Serial.println(e.ip[3]);
+  Serial.println("MAC: ");Serial.print(e.mac[0]);Serial.print(e.mac[1]);Serial.print(e.mac[2]);Serial.print(e.mac[3]);Serial.print(e.mac[4]);Serial.println(e.mac[5]);
   Serial.println("lentth table:");
   Serial.print("startlevel: ");Serial.println(e.length_table.startlevel);
   Serial.print("celldelay: ");Serial.println(e.length_table.celldelay);
@@ -39,8 +39,8 @@ void setup() {
   Serial.print("calibration: ");Serial.println(e.jump_table.calibration);
   Serial.print("postcalibrationdelay: ");Serial.println(e.jump_table.postcalibrationdelay);
 
-  Serial.println("AD7705 clock register:");
-  Serial.println("AD7705 setup register:");
+  Serial.print("AD7705 clock register:");Serial.println();
+  Serial.print("AD7705 setup register:");Serial.println();
 }
 
 void loop() {
