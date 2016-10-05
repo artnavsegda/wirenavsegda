@@ -4,7 +4,7 @@
 #include "settings.h"
 
 byte Ethernet::buffer[300];   // a very small tcp/ip buffer is enough here
-MyObject e;
+MyObject myeeprom;
 int memaddr;
 
 void setup () {
@@ -12,10 +12,11 @@ void setup () {
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
-  EEPROM.get(0, e);
-  if (ether.begin(sizeof Ethernet::buffer, e.mac) == 0)
+  EEPROM.get(0, myeeprom);
+  printeeprom(myeeprom);
+  if (ether.begin(sizeof Ethernet::buffer, myeeprom.mac) == 0)
     Serial.println(F("Failed to access Ethernet controller"));
-  ether.staticSetup(e.ip);
+  ether.staticSetup(myeeprom.ip);
   ether.printIp("My IP: ", ether.myip);
 }
 
@@ -31,10 +32,22 @@ void receiveEvent(int howMany) {
 void requestEvent() {
   switch (memaddr) {
     case I2C_IPADDRESS:
-      Wire.write(e.ip,4);
+      Wire.write(myeeprom.ip,4);
     break;
     case I2C_MACADDRESS:
-      Wire.write(e.mac,6);
+      Wire.write(myeeprom.mac,6);
+    break;
+    case I2C_LENGTHTABLE:
+      Wire.write((byte *)&myeeprom.length_table,26);
+    break;
+    case I2C_JUMPTABLE:
+      Wire.write((byte *)&myeeprom.jump_table,13);
+    break;
+    case I2C_AD7705_SETUP_REGISTER:
+      Wire.write(myeeprom.ad7705_setup_register);
+    break;
+    case I2C_AD7705_CLOCK_REGISTER:
+      Wire.write(myeeprom.ad7705_clock_register);
     break;
     default:
     break;
