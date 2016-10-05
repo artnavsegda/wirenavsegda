@@ -19,7 +19,7 @@ void setup() {
   EEPROM.get(0, e);
   mb.config(e.mac, e.ip);
   for (int i=0;i<16;i++)
-    mb.addIreg(i);
+    mb.addIreg(i,666);
 }
 
 int i;
@@ -33,22 +33,22 @@ void receiveEvent(int howMany) {
     memaddr = Wire.read();
   if (Wire.available())
     switch (memaddr) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-      case 4:
-      case 5:
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-      case 11:
-      case 12:
-      case 13:
-      case 14:
-      case 15:
+      case I2C_ADC0:
+      case I2C_ADC1:
+      case I2C_ADC2:
+      case I2C_ADC3:
+      case I2C_ADC4:
+      case I2C_ADC5:
+      case I2C_ADC6:
+      case I2C_ADC7:
+      case I2C_ADC8:
+      case I2C_ADC9:
+      case I2C_ADC10:
+      case I2C_ADC11:
+      case I2C_ADC12:
+      case I2C_ADC13:
+      case I2C_ADC14:
+      case I2C_ADC15:
         Wire.readBytes((byte *)&adc_scan_results[memaddr], 2);
         mb.Ireg(memaddr,adc_scan_results[memaddr]);
         Serial.print("ADC");

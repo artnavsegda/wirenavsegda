@@ -1,12 +1,17 @@
 #include <EEPROM.h>
 #include "settings.h"
 
-MyObject e;
+MyObject myeeprom;
 
 void setup() {
   // put your setup code here, to run once:
-  EEPROM.get(0, e);
   Serial.begin(9600);
+  EEPROM.get(0, myeeprom);
+  printeeprom(myeeprom);
+}
+
+void printeeprom(struct MyObject e)
+{
   Serial.println("IP: ");Serial.print(e.ip[0]);Serial.print(e.ip[1]);Serial.print(e.ip[2]);Serial.println(e.ip[3]);
   Serial.println("MAC: ");Serial.print(e.mac[0],HEX);Serial.print(e.mac[1],HEX);Serial.print(e.mac[2],HEX);Serial.print(e.mac[3],HEX);Serial.print(e.mac[4],HEX);Serial.println(e.mac[5],HEX);
   Serial.println("lentth table:");
