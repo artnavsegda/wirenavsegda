@@ -68,6 +68,8 @@ struct eeprom
 	unsigned char mac[6];
 	struct lengthtablestruct length_table;
 	struct jumptablestruct jump_table;
-        unsigned char ad7705_setup_register;
-        unsigned char ad7705_clock_register;
+  unsigned char ad7705_setup_register;
+  unsigned char ad7705_clock_register;
+  unsigned char ad7705_zeroscale_calibration_register[3];
+  unsigned char ad7705_fullscale_calibration_register[3];
 };
