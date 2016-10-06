@@ -40,6 +40,12 @@ void requestEvent() {
     case I2C_AD7705_CLOCK_REGISTER:
       Wire.write(myeeprom.ad7705_clock_register);
     break;
+    case I2C_AD7705_ZEROSCALE_CALIBRATION_REGISTER:
+      Wire.write(myeeprom.ad7705_zeroscale_calibration_register,3);
+    break;
+    case I2C_AD7705_FULLSCALE_CALIBRATION_REGISTER:
+      Wire.write(myeeprom.ad7705_fullscale_calibration_register,3);
+    break;
     default:
     break;
   }

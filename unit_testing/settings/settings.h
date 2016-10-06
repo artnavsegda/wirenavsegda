@@ -4,6 +4,8 @@
 #define I2C_JUMPTABLE 103
 #define I2C_AD7705_SETUP_REGISTER 104
 #define I2C_AD7705_CLOCK_REGISTER 105
+#define I2C_AD7705_ZEROSCALE_CALIBRATION_REGISTER 106
+#define I2C_AD7705_FULLSCALE_CALIBRATION_REGISTER 107
 
 enum modelist {
   STARTLEVEL = 5,
@@ -60,5 +62,7 @@ struct MyObject {
   jumptablestruct jump_table;
   byte ad7705_setup_register;
   byte ad7705_clock_register;
+  byte ad7705_zeroscale_calibration_register[3];
+  byte ad7705_fullscale_calibration_register[3];
 };
 
