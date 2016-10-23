@@ -5,6 +5,31 @@
 #define I2C_AD7705_SETUP_REGISTER 104
 #define I2C_AD7705_CLOCK_REGISTER 105
 
+//coil register addressing
+#define STATUSOFSPECTROMETER 200
+#define STATUSOFTHERMOCONTROLLERS 201
+#define AVAILABILITYOFEXTERNALREQUEST 202
+#define STATUSOFZEROTEST 203
+#define STATUSOFCALIBRATION 204
+#define REQUESTTOSTARTCALIBRATION 205
+#define REQUESTTOSTARTZEROTEST 206
+#define REQUESTTOSTARTMEASURMENTOFELEMENTALMERCURY 207
+#define REQUESTTOSTARTPURGE 208
+#define REQUESTTOENDPURGE 209
+
+//holding register addressing
+#define ELEMENTALMERCURYROW 128
+#define TOTALMERCURYROW 129
+#define OXIDIZEDMERCURYROW 130
+#define MONITORFLOW 131
+#define VACUUM 132
+#define DILUTIONPRESSURE 133
+#define BYPASSPRESSURE 134
+#define TEMPERATUREOFSPECTROMETER 135
+#define CODEOFACURRENTMODE 136
+#define ERRORSANDWARNINGS 137
+#define TOTALMERCURYCOEFFICENT 138
+
 enum modelist {
   STARTLEVEL = 5,
   CELLDELAY = 7,
@@ -53,6 +78,35 @@ struct jumptablestruct {
   enum modelist postcalibrationdelay;
 };
 
+struct flowaddress {
+  unsigned short msw;
+  unsigned short lsw;
+};
+
+struct modbustablestruct {
+   unsigned short statusofspectrometer;
+   unsigned short statusofthermocontrollers;
+   unsigned short availabilityforexternalrequest;
+   unsigned short statusofzerotest;
+   unsigned short statusofcalibration;
+   flowaddress elementalmercury;
+   flowaddress totalmercury;
+   flowaddress oxidizedmercury;
+   flowaddress monitorflow;
+   flowaddress vacuum;
+   flowaddress dilutionpressure;
+   flowaddress bypasspressure;
+   flowaddress temperatureofspectrometer;
+   flowaddress codeofacurrentmode;
+   flowaddress errorsandwarnings;
+   flowaddress calibrationcoefficent;
+   unsigned short runcalibration;
+   unsigned short runzerotest;
+   unsigned short runelemental;
+   unsigned short startpurge;
+   unsigned short endpurge;
+};
+
 struct MyObject {
   byte ip[4];
   byte mac[6];
@@ -60,5 +114,6 @@ struct MyObject {
   jumptablestruct jump_table;
   byte ad7705_setup_register;
   byte ad7705_clock_register;
+  modbustablestruct modbustable;
 };
 
