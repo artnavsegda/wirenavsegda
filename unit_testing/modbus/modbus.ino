@@ -9,6 +9,21 @@ ModbusIP mb;
 MyObject myeeprom;
 uint8_t memaddr;
 
+void addcoils(void) {
+  for (int i; i < sizeof(i2c_coils);i++)
+    mb.addCoil(i2c_address_to_modbus_number(i2c_coils[i]);
+}
+
+void addfloat(uint16_t address) {
+  mb.addHreg(address);
+  mb.addHreg(address+1);
+}
+
+void addfloats(void) {
+  for (int i; i < sizeof(i2c_floats);i++)
+    addfloat(i2c_address_to_modbus_number(i2c_floats[i]);
+}
+
 void setup() {
   Serial.begin(9600);
   Wire.begin(8);
