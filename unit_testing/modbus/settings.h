@@ -65,7 +65,7 @@ enum modbus_location {
   MB_REQUESTTOENDPURGE = 103,
 };
 
-const enum modbus_position[] = {
+const enum modbus_location modbus_position[] = {
   //coil register addressing 1
   MB_STATUSOFSPECTROMETER,
   MB_STATUSOFTHERMOCONTROLLERS,
@@ -92,7 +92,7 @@ const enum modbus_position[] = {
   MB_REQUESTTOENDPURGE,
 };
 
-const enum i2c_coils[] = {
+const enum i2c_location i2c_coils[] = {
   I2C_STATUSOFSPECTROMETER,
   I2C_STATUSOFTHERMOCONTROLLERS,
   I2C_AVAILABILITYOFEXTERNALREQUEST,
@@ -105,7 +105,7 @@ const enum i2c_coils[] = {
   I2C_REQUESTTOENDPURGE,
 }
 
-const enum i2c_floats[] = {
+const enum i2c_location i2c_floats[] = {
   I2C_ELEMENTALMERCURYROW,
   I2C_TOTALMERCURYROW,
   I2C_OXIDIZEDMERCURYROW,
@@ -165,35 +165,6 @@ struct jumptablestruct {
   enum modelist precalibrationdelay;
   enum modelist calibration;
   enum modelist postcalibrationdelay;
-};
-
-struct flowaddress {
-  unsigned short msw;
-  unsigned short lsw;
-};
-
-struct modbustablestruct {
-   unsigned short statusofspectrometer;
-   unsigned short statusofthermocontrollers;
-   unsigned short availabilityforexternalrequest;
-   unsigned short statusofzerotest;
-   unsigned short statusofcalibration;
-   flowaddress elementalmercury;
-   flowaddress totalmercury;
-   flowaddress oxidizedmercury;
-   flowaddress monitorflow;
-   flowaddress vacuum;
-   flowaddress dilutionpressure;
-   flowaddress bypasspressure;
-   flowaddress temperatureofspectrometer;
-   flowaddress codeofacurrentmode;
-   flowaddress errorsandwarnings;
-   flowaddress calibrationcoefficent;
-   unsigned short runcalibration;
-   unsigned short runzerotest;
-   unsigned short runelemental;
-   unsigned short startpurge;
-   unsigned short endpurge;
 };
 
 struct MyObject {
