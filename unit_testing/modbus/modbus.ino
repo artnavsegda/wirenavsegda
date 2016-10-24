@@ -47,6 +47,14 @@ void write_double_modbus_registers(uint8_t i2caddr) {
   mb.Hreg(registertouse+1,MSW(datatowrite);
 }
 
+void read_double_modbus_registers(uint8_t i2caddr) {
+  float datatoread;
+  uint16_t registertouse = i2c_address_to_modbus_number[i2caddr];
+  LSW(datatoread) = mb.Hreg(registertouse);
+  MSW(datatoread) = mb.Hreg(registertouse+1);
+  Wire.write((byte *)&datatoread,4);
+}
+
 void receiveEvent(int howMany) {
   if (Wire.available())
     memaddr = Wire.read();
@@ -84,19 +92,16 @@ void requestEvent() {
     case I2C_AD7705_CLOCK_REGISTER:
       Wire.write(myeeprom.ad7705_clock_register);
     break;
-    case STATUSOFSPECTROMETER:
-    case STATUSOFTHERMOCONTROLLERS:
-    case AVAILABILITYOFEXTERNALREQUEST:
-    case STATUSOFZEROTEST:
-    case STATUSOFCALIBRATION:
-    case REQUESTTOSTARTCALIBRATION:
-    case REQUESTTOSTARTZEROTEST:
-    case REQUESTTOSTARTMEASURMENTOFELEMENTALMERCURY:
-    case REQUESTTOSTARTPURGE:
-    case REQUESTTOENDPURGE:
-      Wire.write(mb.Coil(myeeprom.modbustable.endpurge));
-    break;
     default:
+      switch (what_i2c_data_is_that(memaddr)) {
+        case MODBUS_COIL:
+          Wire.write(mb.Coil(i2c_address_to_modbus_number(memaddr));
+        break;
+        case MODBUS_FLOAT:
+          read_double_modbus_registers(memaddr);
+        default:
+        break;
+      }
     break;
   }
 }
