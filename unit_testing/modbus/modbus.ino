@@ -75,15 +75,36 @@ void receiveEvent(int howMany) {
     memaddr = Wire.read();
   if (Wire.available())
   {
-    switch (what_i2c_data_is_that(memaddr)) {
-      case MODBUS_COIL:
-        mb.Coil(i2c_address_to_modbus_number(memaddr),Wire.read());
-      break;
-      case MODBUS_FLOAT:
-        write_double_modbus_registers(memaddr);
-      default:
-      break;
-    }
+    switch (memaddr) {
+    case I2C_IPADDRESS:
+      Wire.readBytes(myeeprom.ip,4);
+    break;
+    case I2C_MACADDRESS:
+      Wire.readBytes(myeeprom.mac,6);
+    break;
+    case I2C_LENGTHTABLE:
+      Wire.readBytes((byte *)&myeeprom.length_table,26);
+    break;
+    case I2C_JUMPTABLE:
+      Wire.readBytes((byte *)&myeeprom.jump_table,13);
+    break;
+    case I2C_AD7705_SETUP_REGISTER:
+      myeeprom.ad7705_setup_register = Wire.read();
+    break;
+    case I2C_AD7705_CLOCK_REGISTER:
+      myeeprom.ad7705_clock_register = Wire.read();
+    break;
+    default:
+      switch (what_i2c_data_is_that(memaddr)) {
+        case MODBUS_COIL:
+          mb.Coil(i2c_address_to_modbus_number(memaddr),Wire.read());
+        break;
+        case MODBUS_FLOAT:
+          write_double_modbus_registers(memaddr);
+        default:
+        break;
+      }
+    break;
   }
 }
 
