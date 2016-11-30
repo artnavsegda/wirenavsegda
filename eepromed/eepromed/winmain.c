@@ -2,7 +2,43 @@
 #include "settings.h"
 #include "dialog.h"
 
-struct eeprom e;
+struct eeprom e = {
+	.jump_table = {
+		.startlevel = CELLDELAY,
+		.celldelay = CELLLEVEL,
+		.celllevel = TOTALMERCURYDELAY,
+		.zerodelay = ZEROTEST,
+		.zerotest = TOTALMERCURYDELAY,
+		.purge = TOTALMERCURYDELAY,
+		.totalmercurydelay = TOTALMERCURY,
+		.totalmercury = TOTALMERCURY,
+		.elementalmercurydelay = ELEMENTALMERCURY,
+		.elementalmercury = TOTALMERCURY,
+		.precalibrationdelay = CALIBRATION,
+		.calibration = POSTCALIBRATIONDELAY,
+		.postcalibrationdelay = TOTALMERCURYDELAY
+	}
+};
+
+int modecount(int mode)
+{
+	switch (mode)
+	{
+	case STARTLEVEL: return 0;
+	case CELLDELAY: return 1;
+	case CELLLEVEL: return 2;
+	case ZERODELAY: return 3;
+	case ZEROTEST: return 4;
+	case PURGE: return 5;
+	case TOTALMERCURYDELAY: return 6;
+	case TOTALMERCURY: return 7;
+	case ELEMENTALMERCURYDELAY: return 8;
+	case ELEMENTALMERCURY: return 9;
+	case PRECALIBRATIONDELAY: return 10;
+	case CALIBRATION: return 11;
+	case POSTCALIBRATIONDELAY: return 12;
+	}
+}
 
 BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -25,7 +61,7 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Pre-calibration delay");
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Calibration");
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Post-calibration delay");
-			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, 0, ((char *)&e.jump_table)[i]);
+			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, modecount(((int *)&e.jump_table)[i-ID_DIALOG_COMBO_STARTLEVEL]),0);
 		}
 		break;
 	case WM_COMMAND:
