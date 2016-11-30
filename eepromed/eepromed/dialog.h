@@ -1,0 +1,3 @@
+#define ID_DIALOG_EXIT 0
+#define ID_DIALOG_TEXT 1
+#define ID_DIALOG_COMBO 2

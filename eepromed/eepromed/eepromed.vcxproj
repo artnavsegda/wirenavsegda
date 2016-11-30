@@ -51,6 +51,13 @@
   <ItemGroup>
     <ClCompile Include="winmain.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dialog.h" />
+    <ClInclude Include="settings.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="dialog.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
