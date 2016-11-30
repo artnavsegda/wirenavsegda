@@ -14,6 +14,22 @@ enum modelist {
 	POSTCALIBRATIONDELAY = 33
 };
 
+enum modelist mode[] = {
+	STARTLEVEL,
+	CELLDELAY,
+	CELLLEVEL,
+	ZERODELAY,
+	ZEROTEST,
+	PURGE,
+	TOTALMERCURYDELAY,
+	TOTALMERCURY,
+	ELEMENTALMERCURYDELAY,
+	ELEMENTALMERCURY,
+	PRECALIBRATIONDELAY,
+	CALIBRATION,
+	POSTCALIBRATIONDELAY
+};
+
 struct lengthtablestruct {
 	unsigned short startlevel;
 	unsigned short celldelay;
