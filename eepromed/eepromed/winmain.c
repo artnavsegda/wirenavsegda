@@ -17,6 +17,21 @@ struct eeprom e = {
 		.precalibrationdelay = CALIBRATION,
 		.calibration = POSTCALIBRATIONDELAY,
 		.postcalibrationdelay = TOTALMERCURYDELAY
+	},
+	.length_table = {
+	.startlevel = 10,
+	.celldelay = 20,
+	.celllevel = 30,
+	.zerodelay = 40,
+	.zerotest = 50,
+	.purge = 6,
+	.totalmercurydelay = 7,
+	.totalmercury = 8,
+	.elementalmercurydelay = 9,
+	.elementalmercury = 199,
+	.precalibrationdelay = 11,
+	.calibration = 12,
+	.postcalibrationdelay = 13
 	}
 };
 
@@ -62,6 +77,10 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Calibration");
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Post-calibration delay");
 			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, modecount(((int *)&e.jump_table)[i-ID_DIALOG_COMBO_STARTLEVEL]),0);
+		}
+		for (int i = ID_DIALOG_EDIT_STARTLEVEL; i <= ID_DIALOG_EDIT_POSTCALIBRATIONDELAY; i++)
+		{
+			SetDlgItemInt(hwndDlg, i, ((unsigned short *)&e.length_table)[i - ID_DIALOG_EDIT_STARTLEVEL], FALSE);
 		}
 		break;
 	case WM_COMMAND:
