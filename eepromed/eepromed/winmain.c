@@ -8,8 +8,23 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 	{
 	case WM_INITDIALOG:
 		SetDlgItemText(hwndDlg, ID_DIALOG_TEXT, "Hello");
-		SendDlgItemMessage(hwndDlg, ID_DIALOG_COMBO, CB_ADDSTRING, 0, "String");
-		SendDlgItemMessage(hwndDlg, ID_DIALOG_COMBO, CB_SETCURSEL, 0, 0);
+		for (int i = ID_DIALOG_COMBO_STARTLEVEL; i <= ID_DIALOG_COMBO_POSTCALIBRATIONDELAY; i++)
+		{
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Start level");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Cell delay");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Cell level");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Zero delay");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Zero test");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Purge");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Total mercury delay");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Total mercury");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Elemental mercury delay");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Elemental mercury");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Pre-calibration delay");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Calibration");
+			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Post-calibration delay");
+			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, 0, 0);
+		}
 		break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
@@ -36,7 +51,7 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
-	struct eeprom e;
+	/*struct eeprom e;
 	HANDLE eepromfile = CreateFile("eeprom.raw", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if (eepromfile == INVALID_HANDLE_VALUE)
 	{
@@ -45,7 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 	}
 
 	int numread;
-	ReadFile(eepromfile, (void *)&e, sizeof(e), &numread, NULL);
+	ReadFile(eepromfile, (void *)&e, sizeof(e), &numread, NULL);*/
 
 	MSG Msg;
 	HWND hwnd = CreateDialog(hInstance, "MainDialog", 0, DialogProc);
