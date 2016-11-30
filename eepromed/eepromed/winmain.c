@@ -2,6 +2,8 @@
 #include "settings.h"
 #include "dialog.h"
 
+struct eeprom e;
+
 BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
@@ -23,7 +25,7 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Pre-calibration delay");
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Calibration");
 			SendDlgItemMessage(hwndDlg, i, CB_ADDSTRING, 0, "Post-calibration delay");
-			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, 0, 0);
+			SendDlgItemMessage(hwndDlg, i, CB_SETCURSEL, 0, ((char *)&e.jump_table)[i]);
 		}
 		break;
 	case WM_COMMAND:
@@ -51,8 +53,7 @@ BOOL CALLBACK DialogProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lPara
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, int nCmdShow)
 {
-	/*struct eeprom e;
-	HANDLE eepromfile = CreateFile("eeprom.raw", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	/*HANDLE eepromfile = CreateFile("eeprom.raw", GENERIC_READ | GENERIC_WRITE, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if (eepromfile == INVALID_HANDLE_VALUE)
 	{
 		MessageBox(NULL, "cannot open eeprom file", "Error", MB_OK | MB_ICONERROR);
