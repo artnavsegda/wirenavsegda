@@ -1,6 +1,6 @@
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial1.begin(9600);
   Serial2.begin(9600);
   Serial3.begin(9600);
@@ -10,15 +10,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-}
-
-void serialEvent(){
-  while (Serial.available())
-  {
-    Serial.print(millis());
-    Serial.print(":RX0:");
-    Serial.println(Serial.read(),HEX);
-  }
 }
 
 void serialEvent1(){
