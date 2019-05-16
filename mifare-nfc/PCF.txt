@@ -1,0 +1,22 @@
+PCF DD3
+
+addr 0x3F
+
+PN5180_BUSY 0x40
+
+IO0 SB1 вход
+
+IO1 SB2 вход
+
+IO2 SB3 вход
+
+IO3 ? ?
+
+IO4 ? ?
+
+IO5 ? ?
+
+IO6 NFC_BUSY ?
+
+IO7 NFC_RESET ?
+
